@@ -1,0 +1,8 @@
+ .navbar-nav {
+   margin-left: auto;
+ }
+
+ .nav-link.active {
+   border: 2px solid black;
+   border-radius: 1em;
+ }
