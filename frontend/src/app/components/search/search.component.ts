@@ -11,7 +11,7 @@ import { HttpClient } from '@angular/common/http';//
 })
 export class SearchComponent implements OnInit {
    userInput: FormGroup;
-  private httpClient: HttpClient;
+   private httpClient: HttpClient;
 
    constructor(private fb: FormBuilder) { }
 
@@ -29,51 +29,67 @@ export class SearchComponent implements OnInit {
    }
 
    onSubmit(form: FormGroup) {
-
-      console.log('Valid?', form.valid); // true or false
-      console.log('keyword', form.value.keyword);
-      console.log('distance', form.value.distance);
-      console.log('category', form.value.category);
-      console.log('location', form.value.location);
+      // console.log('Valid?', form.valid); // true or false
+      // console.log('keyword', form.value.keyword);
+      // console.log('distance', form.value.distance);
+      // console.log('category', form.value.category);
+      // console.log('location', form.value.location);
       console.log(form.value);
 
       let params: URLSearchParams = new URLSearchParams();
-      params.set('keyword', form.value.keyword);
+      params.set('term', form.value.keyword);
       params.set('distance', form.value.distance);
-      params.set('category', form.value.category);
+     params.set('categories', form.value.category);
       params.set('location', form.value.location);
+
+      console.log(params.toString());
+      let query: string = params.toString();
+
+      this.sendForm(query);
 
       // sent to backend.
 
-      this.useIpinfo(this.httpClient);
+      // this.useIpinfo(this.httpClient);
    }
 
    get form() { return this.userInput.controls; }
 
-  //  useIpinfo(form: FormGroup) {
-  //     fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
-  //        (response) => response.json()
-  //     ).then(
-  //        (jsonResponse) => {
-  //           let coords = jsonResponse.loc;
-  //           let a = coords.split(',');
-  //           var lat = a[0];
-  //           var lng = a[1];
-
-  //           form.value.longitude = lng;
-  //           form.value.latitude = lat;
+   sendForm(query: any) {
+    fetch("http://127.0.0.1:3000/cook?" + query).then(
+      (response) => response.json()
+    ).then(
+      (jsonResponse) => {
+        console.log(jsonResponse);
+      }
+    )
+   }
 
 
-  //           return this.http.get(StaticSettings.BASE_URL, {
-  //              search: jsonFormData
-  //           }).subscribe(
-  //              (response) => this.onGetForecastResult(response.json()),
-  //              (error) => this.onGetForecastError(error.json()),
-  //              () => this.onGetForecastComplete()
-  //           );
-  //        }
-  //     );
-  //  }
+
+   //  useIpinfo(form: FormGroup) {
+   //     fetch("https://ipinfo.io/json?token=f6e03259a7a9e5").then(
+   //        (response) => response.json()
+   //     ).then(
+   //        (jsonResponse) => {
+   //           let coords = jsonResponse.loc;
+   //           let a = coords.split(',');
+   //           var lat = a[0];
+   //           var lng = a[1];
+
+   //           form.value.longitude = lng;
+   //           form.value.latitude = lat;
+
+
+   //           return this.http.get(StaticSettings.BASE_URL, {
+   //              search: jsonFormData
+   //           }).subscribe(
+   //              (response) => this.onGetForecastResult(response.json()),
+   //              (error) => this.onGetForecastError(error.json()),
+   //              () => this.onGetForecastComplete()
+   //           );
+   //        }
+   //     );
+   //  }
 
 
 
@@ -82,18 +98,16 @@ export class SearchComponent implements OnInit {
       //todo: more to come
    }
 
-  useIpinfo(httpClient: HttpClient) {
-
-
-    this.httpClient.get('https://ipinfo.io/json?token=f6e03259a7a9e5').subscribe(
-       (value: any) => {
-         console.log(value);
-        //  this.userIP = value.ip;
-       },
-       (error) => {
-         console.log(error);
-       }
-     );
+   useIpinfo(httpClient: HttpClient) {
+      this.httpClient.get('https://ipinfo.io/json?token=f6e03259a7a9e5').subscribe(
+         (value: any) => {
+            console.log(value);
+            //  this.userIP = value.ip;
+         },
+         (error) => {
+            console.log(error);
+         }
+      );
    }
 
 }

@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { SearchResult } from '../shared/models/SearchResult'
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/observable/throw';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
