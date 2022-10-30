@@ -13,6 +13,13 @@ import { DetailsComponent } from './components/details/details.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ResultTableComponent } from './components/result-table/result-table.component';
 import { SearchService } from './services/search.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +30,7 @@ import { SearchService } from './services/search.service';
     DetailsComponent,
     ReservationComponent,
     ResultTableComponent,
+    AutoCompleteComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +38,11 @@ import { SearchService } from './services/search.service';
     ReactiveFormsModule,
 
     HttpClientModule,
+    BrowserAnimationsModule,
+    MatInputModule,
+    MatIconModule,
+    MatButtonModule,
+    MatAutocompleteModule
   ],
   providers: [SearchService],
   bootstrap: [AppComponent]

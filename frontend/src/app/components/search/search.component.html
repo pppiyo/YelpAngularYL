@@ -11,7 +11,37 @@
       <div class="row mb-3">
         <div class="form-group required">
           <label for="keyword" class="control-label  mb-2">Keyword </label>
+          <!-- <mat-form-field class="example-full-width"> -->
+
           <input type="text" class="form-control" id="keyword" required formControlName="keyword">
+
+          <!-- <input type="text" class="form-control" id="keyword" required formControlName="keyword" [formControl]="searchKeywordctrl" [matAutocomplete]="auto"> -->
+          <!-- <mat-autocomplete [panelWidth]="400" #auto="matAutocomplete" (optionSelected)="onSelected()"
+              [displayWith]="displayWith">
+              <mat-option *ngFor="let movie of filteredKeywords" [value]="keyword">
+                <span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field> -->
+
+          <br>
+
+          <!-- <ng-container *ngIf="errorMsg; else elseTemplate">
+            {{errorMsg}}
+          </ng-container>
+          <ng-template #elseTemplate>
+            <div class="movie-details" *ngIf="selectedMovie?.Title">
+              <div>
+                <img [src]="selectedMovie?.Poster" style="height: 250px;" />
+              </div>
+              <div>
+                <h3>Selected Value: {{selectedMovie?.Title}}</h3>
+                <ul>
+                  <li>Year: {{selectedMovie?.Year}}</li>
+                </ul>
+              </div>
+            </div>
+          </ng-template> -->
         </div>
       </div>
 
@@ -47,7 +77,7 @@
           <label class="form-check-label" for="auto-detect">
             Auto-detect my location
           </label>
-          <input class="form-check-input" type="checkbox" id="auto-detect">
+          <input class="form-check-input" type="checkbox" id="auto-detect" formControlName="auto-detect">
         </div>
       </div>
 

@@ -1,9 +1,9 @@
 export interface SearchResult {
-    id: string;
-    imgURL: string;
-    name: string;
-    rating: number;
-    distance: number;
+  id: string;
+  imgURL: string;
+  name: string;
+  rating: number;
+  distance: number;
 }
 
 
