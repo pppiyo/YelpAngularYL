@@ -12,6 +12,7 @@ import { NavBarComponent } from './components/nav-bar/nav-bar.component';
 import { DetailsComponent } from './components/details/details.component';
 import { ReservationComponent } from './components/reservation/reservation.component';
 import { ResultTableComponent } from './components/result-table/result-table.component';
+import { SearchService } from './services/search.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,7 @@ import { ResultTableComponent } from './components/result-table/result-table.com
 
     HttpClientModule,
   ],
-  providers: [],
+  providers: [SearchService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

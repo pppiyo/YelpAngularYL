@@ -1,5 +1,5 @@
-import {Search} from './app/shared/models/Search';
+import {SearchResult} from './app/shared/models/SearchResult';
 
-export const sample_search: Search[] = [
-{'keyword':'sushi', 'distance':4, 'category':'food', 'location':'LA'},
+export const sample_search: SearchResult[] = [
+{'id':'1', 'imgURL':'', 'name':'randomname', 'rating':4, 'distance':2},
 ];

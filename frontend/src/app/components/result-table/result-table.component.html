@@ -13,7 +13,7 @@
     <tr *ngFor="let bizResult of bizResults">
       <th scope="row">{{ 1 }}</th>
       <td>
-        <img [src]="" class="me-2"
+        <img [src]={{bizResult.imgURL}} class="me-2"
           style="width: 20px" />
       </td>
       <td>{{ bizResult.name }}</td>
