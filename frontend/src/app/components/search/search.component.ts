@@ -4,7 +4,6 @@ import { FormGroup, FormControl, Validators, FormBuilder, CheckboxControlValueAc
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';//
 import { SearchService } from 'src/app/services/search.service';
-import { KeywordsService } from 'src/app/services/keywords.service';
 import { max } from 'rxjs';
 
 const BIZ_ITEM_NUM = 10;
@@ -18,8 +17,9 @@ const MILES_TO_METERS = 1609.344;
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
   private httpClient: HttpClient;
+  Childvisible: boolean = false;
 
-  constructor(private fb: FormBuilder, private searchServ: SearchService, private keyServ: KeywordsService) { }
+  constructor(private fb: FormBuilder, private searchServ: SearchService) { }
 
   categories = ['Default', 'Arts & Entertainment',
     'Health & Medical', 'Hotels & Travel',
@@ -91,7 +91,6 @@ export class SearchComponent implements OnInit {
         }
         else {
           // update result table from here.
-          alert(jsonResponse['businesses'].length);
           for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
             this.searchServ.results[i] = {
               'order': i + 1,
@@ -102,7 +101,7 @@ export class SearchComponent implements OnInit {
               'distance': Math.round(jsonResponse['businesses'][i]['distance'] / MILES_TO_METERS),
             };
           }
-
+          this.Childvisible = true;
           // console.log(this.searchServ.results); // DEBUG
         }
       }
@@ -111,7 +110,16 @@ export class SearchComponent implements OnInit {
 
 
   clearAll() {
-    // this.userInput.reset();
-    //todo: more to come
+    this.removeHash();
+    this.userInput.reset();
+    this.userInput.patchValue({
+      distance: 10,
+      category: 'Default',
+    });
+    this.Childvisible = false;
+
+  }
+  removeHash() {
+    history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
   }
 }
