@@ -2,7 +2,6 @@
 
 <div class="card w-50 rounded-4" style="margin: auto; padding: 3% 3% 2% 3%;">
   <div class="card-body">
-    <!-- <div [hidden]="submitted"> -->
     <h3 class="card-title text-center" style="margin-bottom: 2rem;">Business search</h3>
 
     <!-- <form action="get"> -->
@@ -81,7 +80,6 @@
         <div class="col-md-12 text-center ">
           <button id="submit" type="submit" class="btn btn-danger btn-lg me-4" data-toggle="button"
             aria-pressed="true">Submit</button>
-          <!-- type use button or submit? -->
           <button id="clear" type="button" class="btn btn-primary btn-lg" data-toggle="button" aria-pressed="false"
             (click)="clearAll()">Clear</button>
         </div>
@@ -92,7 +90,7 @@
 </div>
 
 <div class="">
-  <app-result-table *ngIf=""></app-result-table>
+  <app-result-table></app-result-table>
   <!-- <app-details *ngIf=""></app-details> -->
   <!-- <app-reservation *ngIf=""></app-reservation> -->
 </div>

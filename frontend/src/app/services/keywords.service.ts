@@ -9,9 +9,9 @@ export class KeywordsService {
 
   constructor() { }
 
-  // getKeywords(): Keywords[] {
-  // return [];
-  // }
+  getKeywords() {
+    return this.keywords;
+  }
 
 }
 

@@ -5,7 +5,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';//
 import { SearchService } from 'src/app/services/search.service';
 import { KeywordsService } from 'src/app/services/keywords.service';
+import { max } from 'rxjs';
 
+const BIZ_ITEM_NUM = 10;
+const MILES_TO_METERS = 1609.344;
 
 @Component({
   selector: 'app-search',
@@ -87,19 +90,20 @@ export class SearchComponent implements OnInit {
           // 'No results available'
         }
         else {
-          // console.log(jsonResponse['businesses'][0]); // DEBUG
           // update result table from here.
-          this.searchServ.result = {
-            'id': jsonResponse['businesses']['id'],
-            'imgURL': jsonResponse['businesses']['image_url'],
-            'name': jsonResponse['businesses']['name'],
-            'rating': jsonResponse['businesses']['rating'],
-            'distance': jsonResponse['businesses']['distance'],
-          };
+          alert(jsonResponse['businesses'].length);
+          for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
+            this.searchServ.results[i] = {
+              'order': i + 1,
+              'id': jsonResponse['businesses'][i]['id'],
+              'imgURL': jsonResponse['businesses'][i]['image_url'],
+              'name': jsonResponse['businesses'][i]['name'],
+              'rating': jsonResponse['businesses'][i]['rating'],
+              'distance': Math.round(jsonResponse['businesses'][i]['distance'] / MILES_TO_METERS),
+            };
+          }
 
-          alert("hi");
-          console.log(this.searchServ.result);
-          // this.searchServ.getSearchResult();
+          // console.log(this.searchServ.results); // DEBUG
         }
       }
     )
