@@ -20,6 +20,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
+import { FormsModule } from '@angular/forms';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 @NgModule({
   declarations: [
@@ -42,7 +45,11 @@ import { AutoCompleteComponent } from './components/auto-complete/auto-complete.
     MatInputModule,
     MatIconModule,
     MatButtonModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+
+    FormsModule,
+    MatTabsModule,
+    BrowserAnimationsModule
   ],
   providers: [SearchService],
   bootstrap: [AppComponent]

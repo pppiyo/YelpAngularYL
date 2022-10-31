@@ -1,7 +1,8 @@
-.bg-image {
-  background-repeat: no-repeat;
-  background-size: auto;
-  resize: vertical;
-  background-position-x: center;
-  background-position-y: bottom;
-}
+  .bg-image {
+    background-repeat: no-repeat;
+    background-size: auto;
+    resize: vertical;
+    background-position-x: center;
+    background-position-y: bottom;
+
+  }

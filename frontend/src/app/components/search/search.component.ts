@@ -17,7 +17,9 @@ const MILES_TO_METERS = 1609.344;
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
   private httpClient: HttpClient;
-  Childvisible: boolean = false;
+  resultTableVisible: boolean = false;
+  detailsVisible: boolean = false;
+  showDetailsData: string;
 
   constructor(private fb: FormBuilder, private searchServ: SearchService) { }
 
@@ -85,7 +87,6 @@ export class SearchComponent implements OnInit {
       (response) => response.json()
     ).then(
       (jsonResponse) => {
-        // console.log(jsonResponse['businesses'][0]); // DEBUG
         if (!jsonResponse['businesses'] || jsonResponse['businesses'].length == 0) {
           // 'No results available'
         }
@@ -101,13 +102,13 @@ export class SearchComponent implements OnInit {
               'distance': Math.round(jsonResponse['businesses'][i]['distance'] / MILES_TO_METERS),
             };
           }
-          this.Childvisible = true;
+          this.resultTableVisible = true;
+
           // console.log(this.searchServ.results); // DEBUG
         }
       }
     )
   }
-
 
   clearAll() {
     this.removeHash();
@@ -116,9 +117,17 @@ export class SearchComponent implements OnInit {
       distance: 10,
       category: 'Default',
     });
-    this.Childvisible = false;
+    this.resultTableVisible = false;
 
   }
+
+  showDetailsPMethod(data: any) {
+    this.resultTableVisible = false;
+    this.showDetailsData = data;
+    this.detailsVisible = true;
+  }
+
+
   removeHash() {
     history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
   }

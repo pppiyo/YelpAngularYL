@@ -3,6 +3,9 @@
   color: red;
 }
 
-/* @media (min-width: 900px) {
 
-} */
+
+
+/* :host ::ng-deep app-result-table {} */
+
+/* @media (min-width: 500px) {} */

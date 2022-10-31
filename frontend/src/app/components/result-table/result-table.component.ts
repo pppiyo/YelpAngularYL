@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
 import { SearchResult } from 'src/app/shared/models/SearchResult';
+
 
 @Component({
   selector: 'app-result-table',
@@ -8,7 +9,6 @@ import { SearchResult } from 'src/app/shared/models/SearchResult';
   styleUrls: ['./result-table.component.css']
 })
 export class ResultTableComponent implements OnInit {
-
   public searchResult: any;
   public errorMsg: any;
 
@@ -16,6 +16,14 @@ export class ResultTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchResult = this._searchService.getSearchResult();
+  }
+
+  @Output()
+  notify: EventEmitter<string> = new EventEmitter<string>();
+
+  showDetails() {
+    this.notify.emit("this is a message from re-table compo");
+    // alert('hi details');
   }
 
 }
