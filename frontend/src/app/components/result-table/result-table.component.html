@@ -10,7 +10,7 @@
   </thead>
 
   <tbody>
-    <tr *ngFor="let bizResult of searchResult">
+    <tr *ngFor="let bizResult of searchResult" (click)="getDetails()" id=bizResult.id>
       <th scope="row">{{ bizResult.order }}</th>
       <td>
         <img [src]="bizResult.imgURL" class="me-2" style="width: 20px" />

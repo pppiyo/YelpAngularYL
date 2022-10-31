@@ -18,4 +18,8 @@ export class ResultTableComponent implements OnInit {
     this.searchResult = this._searchService.getSearchResult();
   }
 
+  getDetails() {
+    alert("hi details");
+  }
+
 }

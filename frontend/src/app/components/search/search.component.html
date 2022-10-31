@@ -2,41 +2,20 @@
 
 <div class="card w-50 rounded-4" style="margin: auto; padding: 3% 3% 2% 3%;">
   <div class="card-body">
-    <h3 class="card-title text-center" style="margin-bottom: 2rem;">Business search</h3>
+    <h2 class="card-title text-center" style="margin-bottom: 2rem;">Business search</h2>
 
-    <!-- <form action="get"> -->
     <form [formGroup]="userInput" #searchForm="ngForm" (ngSubmit)="onSubmit(userInput)" ngNativeValidate>
 
       <div class="row mb-3">
         <div class="form-group required">
           <label for="keyword" class="control-label  mb-2">Keyword </label>
-          <!-- <mat-form-field class="example-full-width"> -->
-          <input type="text" class="form-control" id="keyword" required formControlName="keyword">
-          <!-- <input type="text" class="form-control" id="keyword" required formControlName="keyword" [formControl]="searchKeywordctrl" [matAutocomplete]="auto"> -->
-          <!-- <mat-autocomplete [panelWidth]="400" #auto="matAutocomplete" (optionSelected)="onSelected()"
-              [displayWith]="displayWith">
-              <mat-option *ngFor="let movie of filteredKeywords" [value]="keyword">
-                <span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
-              </mat-option>
-            </mat-autocomplete>
-          </mat-form-field> -->
-          <!-- <br> -->
-          <!-- <ng-container *ngIf="errorMsg; else elseTemplate">
-            {{errorMsg}}
-          </ng-container>
-          <ng-template #elseTemplate>
-            <div class="movie-details" *ngIf="selectedMovie?.Title">
-              <div>
-                <img [src]="selectedMovie?.Poster" style="height: 250px;" />
-              </div>
-              <div>
-                <h3>Selected Value: {{selectedMovie?.Title}}</h3>
-                <ul>
-                  <li>Year: {{selectedMovie?.Year}}</li>
-                </ul>
-              </div>
-            </div>
-          </ng-template> -->
+          <input matInput type="text" class="form-control" id="keyword" required formControlName="keyword"
+            [matAutocomplete]="auto" [formControl]="acControl">
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onSelected()" [displayWith]="displayFn">
+            <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
+              {{option}}
+            </mat-option>
+          </mat-autocomplete>
         </div>
       </div>
 
@@ -89,11 +68,13 @@
   </div>
 </div>
 
-<div class="">
-  <app-result-table></app-result-table>
-  <!-- <app-details *ngIf=""></app-details> -->
-  <!-- <app-reservation *ngIf=""></app-reservation> -->
-</div>
+<br><br><br>
+
+<!-- <div id="result-table" style="display: none"> -->
+<app-result-table></app-result-table>
+<!-- </div> -->
+<!-- <app-details *ngIf=""></app-details> -->
+<!-- <app-reservation *ngIf=""></app-reservation> -->
 
 
 

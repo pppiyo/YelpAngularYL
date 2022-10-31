@@ -2,10 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators, FormBuilder, CheckboxControlValueAccessor }
   from '@angular/forms';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';//
+import { HttpClient } from '@angular/common/http';
 import { SearchService } from 'src/app/services/search.service';
 import { KeywordsService } from 'src/app/services/keywords.service';
 import { max } from 'rxjs';
+import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { map, startWith } from "rxjs/operators";
+import { response } from 'express';
+
 
 const BIZ_ITEM_NUM = 10;
 const MILES_TO_METERS = 1609.344;
@@ -18,14 +23,24 @@ const MILES_TO_METERS = 1609.344;
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
   private httpClient: HttpClient;
+  selectedKeyword: any = "";
+  options = ["this", "is", "pig"];
+  acControl = new FormControl(); // acControl short for auto-complete control.
+  filteredOptions: Observable<string[]>;
 
-  constructor(private fb: FormBuilder, private searchServ: SearchService, private keyServ: KeywordsService) { }
+  constructor(private fb: FormBuilder, private searchServ: SearchService, private keywordServ: KeywordsService) { }
 
   categories = ['Default', 'Arts & Entertainment',
     'Health & Medical', 'Hotels & Travel',
     'Food', 'Professional Services'];
 
   ngOnInit() {
+    this.filteredOptions = this.acControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
+
+    this.getKeys();
     this.userInput = this.fb.group({
       keyword: ['', Validators.required],
       distance: ['10', Validators.required],
@@ -33,6 +48,27 @@ export class SearchComponent implements OnInit {
       location: ['', Validators.required],
       'auto-detect': false
     });
+
+  }
+
+  getKeys() {
+    this.keywordServ.getKeywords().subscribe(response => {
+      this.options = response;
+    })
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
+
+  displayFn(subject: any) {
+    return subject ? subject.text : undefined;
+  }
+
+  onSelected() {
+    // console.log(this.keyServ.keywords);
+    this.selectedKeyword = this.selectedKeyword;
   }
 
   onSubmit(form: FormGroup) {
@@ -91,7 +127,6 @@ export class SearchComponent implements OnInit {
         }
         else {
           // update result table from here.
-          alert(jsonResponse['businesses'].length);
           for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
             this.searchServ.results[i] = {
               'order': i + 1,
@@ -103,6 +138,7 @@ export class SearchComponent implements OnInit {
             };
           }
 
+          // console.log(document.getElementsByClassName("result-table"));
           // console.log(this.searchServ.results); // DEBUG
         }
       }
@@ -111,7 +147,18 @@ export class SearchComponent implements OnInit {
 
 
   clearAll() {
-    // this.userInput.reset();
-    //todo: more to come
+    this.removeHash();
+    this.userInput.reset();
+    this.userInput.patchValue({
+      distance: 10,
+      category: 'Default',
+    });
+
   }
+
+
+  removeHash() {
+    history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
+  }
+
 }

@@ -1,3 +1,3 @@
 export interface Keywords {
-  keyword: string;
+  keywords: string[];
 }
