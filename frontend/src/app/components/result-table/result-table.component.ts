@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchService } from 'src/app/services/search.service';
+import { SearchResult } from 'src/app/shared/models/SearchResult';
 
 @Component({
   selector: 'app-result-table',
@@ -14,9 +15,7 @@ export class ResultTableComponent implements OnInit {
   constructor(private _searchService: SearchService) { }
 
   ngOnInit(): void {
-    this.searchResult = this._searchService.getSearchResult()
-    .subscribe(data => this.searchResult = data,
-      error => this.errorMsg = error);
+    this.searchResult = this._searchService.getSearchResult();
   }
 
 }

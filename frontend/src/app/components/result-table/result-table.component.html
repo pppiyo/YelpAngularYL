@@ -9,16 +9,15 @@
     </tr>
   </thead>
 
-  <!-- <tbody>
-    <tr *ngFor="let bizResult of bizResults">
+  <tbody>
+    <tr *ngFor="let bizResult of searchResult">
       <th scope="row">{{ 1 }}</th>
       <td>
-        <img [src]={{bizResult.imgURL}} class="me-2"
-          style="width: 20px" />
+        <img [src]="bizResult.imgURL" class="me-2" style="width: 20px" />
       </td>
       <td>{{ bizResult.name }}</td>
       <td>{{ bizResult.rating | number }}</td>
       <td>{{ bizResult.distance | number }}</td>
     </tr>
-  </tbody> -->
+  </tbody>
 </table>

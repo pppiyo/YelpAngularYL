@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { SearchResult } from '../shared/models/SearchResult'
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 
@@ -8,15 +7,11 @@ import { Observable, throwError } from 'rxjs';
   providedIn: 'root'
 })
 export class SearchService {
-  private _url: string = "";
+  public result: SearchResult;
 
-  constructor(private http: HttpClient) { }
+  constructor() { }
 
-  getSearchResult(): Observable<SearchResult[]> {
-    return this.http.get<SearchResult[]>(this._url)
-      .pipe(catchError(this.errorHandler));
-  }
-  errorHandler(error: HttpErrorResponse) {
-    return throwError(error.message || 'server Error');
+  getSearchResult() {
+    return
   }
 }
