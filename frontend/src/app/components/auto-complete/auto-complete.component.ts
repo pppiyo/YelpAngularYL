@@ -59,12 +59,12 @@ export class AutoCompleteComponent implements OnInit {
         )
       )
       .subscribe((data: any) => {
-        if (data['Search'] == undefined) {
+        if (data['terms'] == undefined) {
           this.errorMsg = data['Error'];
           this.filteredKeywords = [];
         } else {
           this.errorMsg = "";
-          this.filteredKeywords = data['Search'];
+          this.filteredKeywords = data['terms'];
         }
         console.log(this.filteredKeywords);
       });
