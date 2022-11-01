@@ -5,9 +5,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';//
 import { SearchService } from 'src/app/services/search.service';
 import { max } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
 
 const BIZ_ITEM_NUM = 10;
 const MILES_TO_METERS = 1609.344;
+
+export interface Term {
+  term: string;
+}
 
 @Component({
   selector: 'app-search',
@@ -16,12 +23,20 @@ const MILES_TO_METERS = 1609.344;
 })
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
-  private httpClient: HttpClient;
   resultTableVisible: boolean = false;
   detailsVisible: boolean = false;
   showDetailsData: string;
 
-  constructor(private fb: FormBuilder, private searchServ: SearchService) { }
+  filteredKeywords: Observable<any[]>;
+  isLoading = false;
+  errorMsg!: string;
+  minLengthTerm = 3;
+
+  myControl = new FormControl();
+  // options: Term[] = [{ term: 'Mary' }, { term: 'Shelley' }, { term: 'Igor' }]; //
+  // filteredOptions: Observable<string[]>; //
+
+  constructor(private fb: FormBuilder, private searchServ: SearchService, private http: HttpClient) { }
 
   categories = ['Default', 'Arts & Entertainment',
     'Health & Medical', 'Hotels & Travel',
@@ -35,7 +50,49 @@ export class SearchComponent implements OnInit {
       location: ['', Validators.required],
       'auto-detect': false
     });
+    // this.filteredOptions = this.myControl.valueChanges.pipe(
+    //   startWith(''),
+    //   map(value => {
+    //     const term = typeof value === 'string' ? value : value?.term;
+    //     return term ? this._filter(term as string) : this.options.slice();
+    //   }),
+    // );
+
+    this.myControl.valueChanges
+      .pipe(
+        filter(res => {
+          return res !== null && res.length >= this.minLengthTerm
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        switchMap(value => this.http.get('http://127.0.0.1/autoComplete?' + value)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false
+            }),
+          )
+        )
+      )
+      .subscribe((data: any) => {
+        if (data['terms'] == undefined || data['categories'] == undefined) {
+          this.errorMsg = data['Error'];
+        } else {
+          this.errorMsg = "";
+          this.filteredKeywords = data['terms']['text'].concat(data['categories']['title']);
+        }
+        console.log(this.filteredKeywords);
+      });
   }
+
+  // private _filter(term: string): Term[] {
+  //   const filterValue = term.toLowerCase();
+  //   return this.options.filter(option => option.term.toLowerCase().includes(filterValue));
+  // }
+
+  displayFn(term: Term): string {
+    return term && term.term ? term.term : '';
+  }
+
 
   onSubmit(form: FormGroup) {
     // console.log(form.value); // DEBUG
@@ -118,6 +175,7 @@ export class SearchComponent implements OnInit {
       category: 'Default',
     });
     this.resultTableVisible = false;
+    this.detailsVisible = false;
 
   }
 
@@ -126,7 +184,6 @@ export class SearchComponent implements OnInit {
     this.showDetailsData = data;
     this.detailsVisible = true;
   }
-
 
   removeHash() {
     history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);

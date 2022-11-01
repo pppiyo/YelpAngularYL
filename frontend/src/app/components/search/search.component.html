@@ -11,16 +11,13 @@
         <div class="row mb-3">
           <div class="form-group required">
             <label for="keyword" class="control-label  mb-2">Keyword </label>
-            <!-- <mat-form-field class="example-full-width"> -->
-            <input type="text" class="form-control" id="keyword" required formControlName="keyword">
-            <!-- <input type="text" class="form-control" id="keyword" required formControlName="keyword" [formControl]="searchKeywordctrl" [matAutocomplete]="auto"> -->
-            <!-- <mat-autocomplete [panelWidth]="400" #auto="matAutocomplete" (optionSelected)="onSelected()"
-              [displayWith]="displayWith">
-              <mat-option *ngFor="let movie of filteredKeywords" [value]="keyword">
-                <span><b>{{movie.Title}}</b> ({{movie.Year}})</span>
+            <input type="text" class="form-control" id="keyword" required formControlName="keyword"
+              [formControl]="myControl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option *ngFor="let option of filteredKeywords | async" [value]="option">
+                {{option.term}}
               </mat-option>
-            </mat-autocomplete>-->
-            <!-- </mat-form-field>  -->
+            </mat-autocomplete>
           </div>
         </div>
 

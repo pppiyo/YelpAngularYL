@@ -29,7 +29,7 @@ export class AutoCompleteComponent implements OnInit {
   }
 
   displayWith(value: any) {
-    return value?.Title;
+    return value?.Term;
   }
 
   clearSelection() {

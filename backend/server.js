@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 app.get('/cook', function (req, res) {
-    // console.log(req.query); // DEBUG
+    console.log(req.query); // DEBUG
     let query = req.query;
 
     // radius
@@ -70,18 +70,19 @@ app.get('/cook', function (req, res) {
 
 app.get('/autoComplete', function (req, res) {
     // call autocomplete
+    console.log(req.query);
+    let query = req.query;
     axios({
         method: 'get',
         url: 'https://api.yelp.com/v3/autocomplete',
         headers: { 'Authorization': `Bearer ${apiKey}` },
-        params: { 'text': 'Ramen' }
+        params: query
     }).then(function (response) {
-        console.log(response.data);
+        res.status(200).send(response.data);
+        console.log(response.data)
     });
 
 })
-
-
 
 
 
