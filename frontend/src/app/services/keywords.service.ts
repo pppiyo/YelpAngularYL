@@ -1,18 +1,19 @@
-// import { Injectable } from '@angular/core';
-// import { Keywords } from '../shared/models/Keywords';
-// import { HttpClient } from '@angular/common/http';
-// import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { Keywords } from '../shared/models/Keywords';
 
-// @Injectable({
-//   providedIn: 'root'
-// })
-// export class KeywordsService {
+@Injectable({
+  providedIn: 'root'
+})
+export class KeywordsService {
+  public keywords: Keywords[];
 
-//   constructor() { }
+  constructor() { this.keywords = []; }
 
-//   getKeywords() {
-//     return this.keywords;
-//   }
+  getKeywords() {
+    return this.keywords;
+  }
+}
 
-// }
+
+
 

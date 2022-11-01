@@ -12,9 +12,9 @@ import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } 
 const BIZ_ITEM_NUM = 10;
 const MILES_TO_METERS = 1609.344;
 
-export interface Term {
-  term: string;
-}
+// export interface Term {
+//   term: string;
+// }
 
 @Component({
   selector: 'app-search',
@@ -25,7 +25,7 @@ export class SearchComponent implements OnInit {
   userInput: FormGroup;
   resultTableVisible: boolean = false;
   detailsVisible: boolean = false;
-  showDetailsData: string;
+  showDetailsData: string; //
 
   filteredKeywords: Observable<any[]>;
   isLoading = false;
@@ -69,6 +69,7 @@ export class SearchComponent implements OnInit {
           .pipe(
             finalize(() => {
               this.isLoading = false
+              alert(value);
             }),
           )
         )
@@ -89,9 +90,9 @@ export class SearchComponent implements OnInit {
   //   return this.options.filter(option => option.term.toLowerCase().includes(filterValue));
   // }
 
-  displayFn(term: Term): string {
-    return term && term.term ? term.term : '';
-  }
+  // displayFn(term: Term): string {
+  //   return term && term.term ? term.term : '';
+  // }
 
 
   onSubmit(form: FormGroup) {
