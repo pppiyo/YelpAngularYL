@@ -21,9 +21,8 @@ export class ResultTableComponent implements OnInit {
   @Output()
   notify: EventEmitter<string> = new EventEmitter<string>();
 
-  showDetails() {
-    this.notify.emit("this is a message from re-table compo");
-    // alert('hi details');
+  showDetails(event: any, biz: any) {
+    this.notify.emit(biz.id);
   }
 
 }

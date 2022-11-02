@@ -1,20 +1,21 @@
 <div style="text-align: center; margin: auto;">
-  <div class="card shadow-2-strong card-registration rounded-4" style="display: inline-block; padding-top: 0.5%">
+  <div class="card shadow-2-strong card-registration rounded-4"
+    style="display: inline-block; padding-top: 0.5%; margin:2%">
     <div class="row justify-content-center .row.row-eq-height > .col-xs-4">
-      <div class=" col-auto">
+      <div class="col-md-12">
         <table class="table table-striped rounded-4">
           <thead>
             <tr>
               <th scope="col" class="th">#</th>
-              <th scope="col" class="th">Image</th>
-              <th scope="col" class="th">Business Name</th>
-              <th scope="col" class="th">Rating</th>
+              <th scope="col-md-6" class="th">Image</th>
+              <th scope="col-md-2" class="th">Business Name</th>
+              <th scope="col-md-1" class="th">Rating</th>
               <th scope="col" class="th">Distance (miles)</th>
             </tr>
           </thead>
 
           <tbody>
-            <tr *ngFor="let bizResult of searchResult" (click)="showDetails()" style="height: 100px;">
+            <tr *ngFor="let bizResult of searchResult" (click)="showDetails($event, bizResult)" style="height: 100px;">
               <th scope="row">{{ bizResult.order }}</th>
               <td>
                 <img [src]="bizResult.imgURL" class="me-2" style="width: 80px; height: 80px; object-fit:cover;" />

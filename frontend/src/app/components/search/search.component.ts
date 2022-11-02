@@ -12,9 +12,6 @@ import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } 
 const BIZ_ITEM_NUM = 10;
 const MILES_TO_METERS = 1609.344;
 
-// export interface Term {
-//   term: string;
-// }
 
 @Component({
   selector: 'app-search',
@@ -23,18 +20,18 @@ const MILES_TO_METERS = 1609.344;
 })
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
+  noResultsVisible: boolean = false;
   resultTableVisible: boolean = false;
   detailsVisible: boolean = false;
   showDetailsData: string; //
 
-  filteredKeywords: Observable<any[]>;
+  filteredKeywords: string[];
   isLoading = false;
   errorMsg!: string;
   minLengthTerm = 3;
-
-  myControl = new FormControl();
-  // options: Term[] = [{ term: 'Mary' }, { term: 'Shelley' }, { term: 'Igor' }]; //
-  // filteredOptions: Observable<string[]>; //
+  selectedKeyword: any = "";
+  searchKeywordsCtrl = new FormControl();
+  filteredKeyword: any;
 
   constructor(private fb: FormBuilder, private searchServ: SearchService, private http: HttpClient) { }
 
@@ -43,60 +40,58 @@ export class SearchComponent implements OnInit {
     'Food', 'Professional Services'];
 
   ngOnInit() {
-    this.userInput = this.fb.group({
-      keyword: ['', Validators.required],
-      distance: ['10', Validators.required],
-      category: [`${this.categories[0]}`, Validators.required],
-      location: ['', Validators.required],
-      'auto-detect': false
-    });
-    // this.filteredOptions = this.myControl.valueChanges.pipe(
-    //   startWith(''),
-    //   map(value => {
-    //     const term = typeof value === 'string' ? value : value?.term;
-    //     return term ? this._filter(term as string) : this.options.slice();
-    //   }),
-    // );
-
-    this.myControl.valueChanges
+    this.searchKeywordsCtrl.valueChanges
       .pipe(
         filter(res => {
           return res !== null && res.length >= this.minLengthTerm
         }),
         distinctUntilChanged(),
         debounceTime(1000),
-        switchMap(value => this.http.get('http://127.0.0.1/autoComplete?' + value)
+        tap(() => {
+          this.errorMsg = "";
+          this.filteredKeywords = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.http.get('http://127.0.0.1:3000/autoComplete?text=' + value)
           .pipe(
             finalize(() => {
-              this.isLoading = false
-              alert(value);
+              this.isLoading = false;
             }),
           )
         )
       )
       .subscribe((data: any) => {
         if (data['terms'] == undefined || data['categories'] == undefined) {
-          this.errorMsg = data['Error'];
+          this.errorMsg = "Something went wrong"; // DEBUG
         } else {
           this.errorMsg = "";
-          this.filteredKeywords = data['terms']['text'].concat(data['categories']['title']);
+          let fk: any[] = [];
+          data['terms'].forEach(function (value: any) {
+            fk.push(value['text']);
+          });
+          data['categories'].forEach(function (value: any) {
+            fk.push(value['title']);
+          });
+          this.filteredKeywords = fk;
         }
-        console.log(this.filteredKeywords);
       });
+
+    this.userInput = this.fb.group({
+      keyword: [this.selectedKeyword, Validators.required],
+      distance: ['10', Validators.required],
+      category: [`${this.categories[0]}`, Validators.required],
+      location: ['', Validators.required],
+      'auto-detect': false
+    });
   }
 
-  // private _filter(term: string): Term[] {
-  //   const filterValue = term.toLowerCase();
-  //   return this.options.filter(option => option.term.toLowerCase().includes(filterValue));
-  // }
-
-  // displayFn(term: Term): string {
-  //   return term && term.term ? term.term : '';
-  // }
-
-
   onSubmit(form: FormGroup) {
-    // console.log(form.value); // DEBUG
+    this.detailsVisible = false;
+    this.noResultsVisible = false;
+    this.resultTableVisible = false;
+
+    form.value.keyword = this.selectedKeyword.trim();
+
     if (form.controls['auto-detect'].value) { // if checkbox checked
       this.useIpinfo(form);
     }
@@ -112,6 +107,11 @@ export class SearchComponent implements OnInit {
       let query: string = params.toString();
       this.sendForm(query);
     }
+
+  }
+
+  onSelect(event: any) {
+    this.selectedKeyword = event.target.textContent.trim();
   }
 
   get form() { return this.userInput.controls; }
@@ -146,11 +146,14 @@ export class SearchComponent implements OnInit {
     ).then(
       (jsonResponse) => {
         if (!jsonResponse['businesses'] || jsonResponse['businesses'].length == 0) {
-          // 'No results available'
+          this.noResultsVisible = true;
         }
         else {
           // update result table from here.
           for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
+            if (jsonResponse['businesses'][i]['image_url'] == '') {
+              jsonResponse['businesses'][i]['image_url'] = 'https://logos-world.net/wp-content/uploads/2020/12/Yelp-Logo.png';
+            }
             this.searchServ.results[i] = {
               'order': i + 1,
               'id': jsonResponse['businesses'][i]['id'],
@@ -161,8 +164,6 @@ export class SearchComponent implements OnInit {
             };
           }
           this.resultTableVisible = true;
-
-          // console.log(this.searchServ.results); // DEBUG
         }
       }
     )
@@ -177,13 +178,15 @@ export class SearchComponent implements OnInit {
     });
     this.resultTableVisible = false;
     this.detailsVisible = false;
-
+    this.noResultsVisible = false;
   }
 
   showDetailsPMethod(data: any) {
+    console.log('this is data: ' + data);
+    this.noResultsVisible = false;
     this.resultTableVisible = false;
-    this.showDetailsData = data;
     this.detailsVisible = true;
+    this.showDetailsData = data;
   }
 
   removeHash() {

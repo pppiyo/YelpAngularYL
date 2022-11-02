@@ -20,6 +20,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
 import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { NoResultsComponent } from './components/no-results/no-results.component';
 
 
 @NgModule({
@@ -32,6 +34,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     ReservationComponent,
     ResultTableComponent,
     AutoCompleteComponent,
+    NoResultsComponent,
+
   ],
   imports: [
     BrowserModule,
@@ -47,7 +51,8 @@ import { MatTabsModule } from '@angular/material/tabs';
 
     FormsModule,
     MatTabsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MatProgressSpinnerModule,
   ],
   providers: [SearchService],
   bootstrap: [AppComponent]

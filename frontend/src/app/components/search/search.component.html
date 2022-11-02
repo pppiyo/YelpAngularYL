@@ -12,11 +12,16 @@
           <div class="form-group required">
             <label for="keyword" class="control-label  mb-2">Keyword </label>
             <input type="text" class="form-control" id="keyword" required formControlName="keyword"
-              [formControl]="myControl" [matAutocomplete]="auto">
-            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-              <mat-option *ngFor="let option of filteredKeywords | async" [value]="option">
-                {{option.term}}
+              [formControl]="searchKeywordsCtrl" [matAutocomplete]="auto">
+            <mat-autocomplete #auto="matAutocomplete">
+              <mat-option *ngIf="isLoading" class="is-loading">
+                <mat-spinner diameter="25"></mat-spinner>
               </mat-option>
+              <ng-container *ngIf="!isLoading">
+                <mat-option *ngFor="let option of filteredKeywords" [value]="option" (click)="onSelect($event)">
+                  {{option}}
+                </mat-option>
+              </ng-container>
             </mat-autocomplete>
           </div>
         </div>
@@ -72,7 +77,9 @@
   </div>
 </div>
 
-<p>{{showDetailsData}}</p>
+<app-no-results *ngIf="noResultsVisible"></app-no-results>
+
 <app-result-table *ngIf="resultTableVisible" (notify)="showDetailsPMethod($event)"></app-result-table>
+
 <app-details *ngIf="detailsVisible"></app-details>
 <!-- <app-reservation *ngIf=""></app-reservation> -->
