@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { GlobalConstants } from 'src/app/global/global-constants';
+GlobalConstants
 
 @Component({
   selector: 'app-bookings',
