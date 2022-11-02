@@ -22,6 +22,7 @@ import { FormsModule } from '@angular/forms';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoResultsComponent } from './components/no-results/no-results.component';
+import { DetailsService } from './services/details.service';
 
 
 @NgModule({
@@ -54,7 +55,7 @@ import { NoResultsComponent } from './components/no-results/no-results.component
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
   ],
-  providers: [SearchService],
+  providers: [SearchService, DetailsService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

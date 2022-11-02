@@ -1,7 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { GlobalConstants } from 'src/app/global/global-constants';
 import { SearchService } from 'src/app/services/search.service';
 import { SearchResult } from 'src/app/shared/models/SearchResult';
-
+GlobalConstants
 
 @Component({
   selector: 'app-result-table',
@@ -10,7 +11,6 @@ import { SearchResult } from 'src/app/shared/models/SearchResult';
 })
 export class ResultTableComponent implements OnInit {
   public searchResult: any;
-  public errorMsg: any;
 
   constructor(private _searchService: SearchService) { }
 

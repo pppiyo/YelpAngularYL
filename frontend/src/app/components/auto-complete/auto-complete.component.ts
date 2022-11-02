@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
-
-const API_KEY = "";
+import { GlobalConstants } from 'src/app/global/global-constants';
+GlobalConstants
 
 @Component({
   selector: 'app-auto-complete',
@@ -50,7 +50,7 @@ export class AutoCompleteComponent implements OnInit {
           this.filteredKeywords = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get('http://127.0.0.1/autoComplete?' + value)
+        switchMap(value => this.http.get(GlobalConstants.API_URL + '/autoComplete?' + value)
           .pipe(
             finalize(() => {
               this.isLoading = false

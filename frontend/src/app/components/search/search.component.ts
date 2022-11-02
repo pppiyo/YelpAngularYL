@@ -8,9 +8,10 @@ import { max } from 'rxjs';
 import { Observable } from 'rxjs';
 import { map, startWith } from 'rxjs/operators';
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Input } from '@angular/core';
+import { GlobalConstants } from 'src/app/global/global-constants';
+GlobalConstants
 
-const BIZ_ITEM_NUM = 10;
-const MILES_TO_METERS = 1609.344;
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SearchComponent implements OnInit {
   noResultsVisible: boolean = false;
   resultTableVisible: boolean = false;
   detailsVisible: boolean = false;
-  showDetailsData: string; //
+  bizID: string;
 
   filteredKeywords: string[];
   isLoading = false;
@@ -52,7 +53,7 @@ export class SearchComponent implements OnInit {
           this.filteredKeywords = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get('http://127.0.0.1:3000/autoComplete?text=' + value)
+        switchMap(value => this.http.get(GlobalConstants.API_URL + '/autoComplete?text=' + value)
           .pipe(
             finalize(() => {
               this.isLoading = false;
@@ -141,7 +142,7 @@ export class SearchComponent implements OnInit {
   }
 
   sendForm(query: any) {
-    fetch("http://127.0.0.1:3000/cook?" + query).then(
+    fetch(GlobalConstants.API_URL + '/cook?' + query).then(
       (response) => response.json()
     ).then(
       (jsonResponse) => {
@@ -150,9 +151,9 @@ export class SearchComponent implements OnInit {
         }
         else {
           // update result table from here.
-          for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
+          for (let i = 0; i < Math.min(GlobalConstants.BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
             if (jsonResponse['businesses'][i]['image_url'] == '') {
-              jsonResponse['businesses'][i]['image_url'] = 'https://logos-world.net/wp-content/uploads/2020/12/Yelp-Logo.png';
+              jsonResponse['businesses'][i]['image_url'] = GlobalConstants.YELP_ICON_URL;
             }
             this.searchServ.results[i] = {
               'order': i + 1,
@@ -160,7 +161,7 @@ export class SearchComponent implements OnInit {
               'imgURL': jsonResponse['businesses'][i]['image_url'],
               'name': jsonResponse['businesses'][i]['name'],
               'rating': jsonResponse['businesses'][i]['rating'],
-              'distance': Math.round(jsonResponse['businesses'][i]['distance'] / MILES_TO_METERS),
+              'distance': Math.round(jsonResponse['businesses'][i]['distance'] / GlobalConstants.MILES_TO_METERS),
             };
           }
           this.resultTableVisible = true;
@@ -186,7 +187,7 @@ export class SearchComponent implements OnInit {
     this.noResultsVisible = false;
     this.resultTableVisible = false;
     this.detailsVisible = true;
-    this.showDetailsData = data;
+    this.bizID = data;
   }
 
   removeHash() {

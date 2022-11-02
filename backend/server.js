@@ -10,7 +10,6 @@ const app = express();
 
 const axios = require('axios');
 
-const querystring = require('querystring');
 
 const apiKey = 'MHEQvk4S6lhCtj3jff-3adZWOWhEelClK3b4aQrzTJRjAy4VgtVka7DRxf-Qa_Fl5VEkMesbD5G6T89cfBHWuuYRFnAxrCRovbiaDr-Vc13ya6XqwF9-O6CMigpSY3Yx'
 
@@ -66,39 +65,33 @@ app.get('/cook', function (req, res) {
 })
 
 
-
 app.get('/autoComplete', function (req, res) {
-    let text = { text: req.query.text };
     axios({
         method: 'get',
         url: 'https://api.yelp.com/v3/autocomplete',
         headers: { 'Authorization': `Bearer ${apiKey}` },
-        params: text
+        params: req.query
     }).then(function (response) {
         res.status(200).send(response.data);
     });
 })
 
 
-
-app.listen(PORT, function () {
-    console.log("server running on localhost: " + PORT)
+// call biz details
+app.get('/details', function (req, res) {
+    let id = req.query.id;
+    axios({
+        method: 'get',
+        url: 'https://api.yelp.com/v3/businesses/' + id,
+        headers: { 'Authorization': `Bearer ${apiKey}` },
+        // params: id
+    }).then(function (response) {
+        res.status(200).send(response.data);
+    });
 })
 
 
-
 /*
-// call biz details
-axios({
-    method: 'get',
-    url: 'https://api.yelp.com/v3/businesses/FmGF1B-Rpsjq1f5b56qMwg',
-    headers: { 'Authorization': `Bearer ${apiKey}` },
-}).then(function (response) {
-    console.log(response.data);
-    });
-
-    
-
 // call review
 axios({
     method: 'get',
@@ -109,3 +102,9 @@ axios({
     console.log(response.data);
 });
 */
+
+
+
+app.listen(PORT, function () {
+    console.log("server running on localhost: " + PORT)
+})
