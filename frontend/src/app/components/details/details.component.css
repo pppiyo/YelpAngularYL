@@ -6,3 +6,8 @@
 .textArea .column {
   flex: auto;
 }
+
+
+.subheading {
+  font-weight: bold;
+}

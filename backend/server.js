@@ -85,7 +85,7 @@ app.get('/details', function (req, res) {
         url: 'https://api.yelp.com/v3/businesses/' + id,
         headers: { 'Authorization': `Bearer ${apiKey}` },
     }).then(function (response) {
-        console.log(response.data)
+        // console.log(response.data)
         res.status(200).send(response.data);
     });
 })

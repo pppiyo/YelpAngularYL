@@ -24,7 +24,7 @@ export class AutoCompleteComponent implements OnInit {
   ) { }
 
   onSelected() {
-    console.log(this.selectedKeyword);
+    // console.log(this.selectedKeyword);
     this.selectedKeyword = this.selectedKeyword;
   }
 
@@ -66,7 +66,7 @@ export class AutoCompleteComponent implements OnInit {
           this.errorMsg = "";
           this.filteredKeywords = data['terms'];
         }
-        console.log(this.filteredKeywords);
+        // console.log(this.filteredKeywords);
       });
   }
 }
