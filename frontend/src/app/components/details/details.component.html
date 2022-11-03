@@ -1,9 +1,56 @@
-<div id="detailsCard">
-  {{bizDetails}}
+<div id="detailsCard" class="card shadow-2-strong card-registration rounded-4"
+  style="margin:0 auto; max-width: 1000px;">
+  <!-- {{bizDetails.address}} -->
 
-  <mat-tab-group mat-align-tabs="center" backgroundColor="accent">
-    <mat-tab label="details">Business details</mat-tab>
-    <mat-tab label="map">Map location</mat-tab>
-    <mat-tab label="reviews">Reviews</mat-tab>
+  <p class="title">name</p>
+
+  <mat-tab-group mat-align-tabs="center" backgroundColor="warn">
+    <mat-tab label="Business details">
+      <!-- <mat-tab label="details">{{bizDetails.name}} -->
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="subArea" id="stat">
+              <p id="statusHead" class="subheading">Status</p>
+              <p id="status" class="infotext"></p>
+            </div>
+            <div class="subArea" id="addr">
+              <p id="addressHead" class="subheading">Address</p>
+              <p id="address" class="infotext"></p>
+            </div>
+            <div class="subArea" id="tran">
+              <p id="transcationSupportedHead" class="subheading">Transcation Supported</p>
+              <p id="transcationSupported" class="infotext"></p>
+            </div>
+            <div class="subArea" id="more">
+              <p id="moreInfoHead" class="subheading">More Info</p>
+              <p id="moreInfo" class="infotext"><a href="" target="_blank">Yelp</a></p>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="subArea" id="cate">
+              <p id="categoryHead" class="subheading">Category</p>
+              <p id="category" class="infotext"></p>
+            </div>
+            <div class="subArea" id="phon">
+              <p id="phoneNumberHead" class="subheading">Phone Number</p>
+              <p id="phoneNumber" class="infotext"></p>
+            </div>
+            <div class="subArea" id="pric">
+              <p id="priceHead" class="subheading">Price</p>
+              <p id="price" class="infotext"></p>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          where pic is
+        </div>
+      </div>
+
+
+
+    </mat-tab>
+    <mat-tab label="Map location">Map location</mat-tab>
+    <mat-tab label="Reviews">Reviews</mat-tab>
   </mat-tab-group>
 </div>

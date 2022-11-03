@@ -25,4 +25,6 @@ export class ResultTableComponent implements OnInit {
     this.notify.emit(biz.id);
   }
 
+
+
 }

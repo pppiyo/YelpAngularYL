@@ -13,7 +13,6 @@ import { GlobalConstants } from 'src/app/global/global-constants';
 GlobalConstants
 
 
-
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -41,6 +40,15 @@ export class SearchComponent implements OnInit {
     'Food', 'Professional Services'];
 
   ngOnInit() {
+    this.userInput = this.fb.group({
+      keyword: ['', Validators.required],
+      // keyword: [this.selectedKeyword, Validators.required],
+      distance: ['10', Validators.required],
+      category: [`${this.categories[0]}`, Validators.required],
+      location: ['', Validators.required],
+      'auto-detect': false
+    });
+
     this.searchKeywordsCtrl.valueChanges
       .pipe(
         filter(res => {
@@ -76,14 +84,6 @@ export class SearchComponent implements OnInit {
           this.filteredKeywords = fk;
         }
       });
-
-    this.userInput = this.fb.group({
-      keyword: [this.selectedKeyword, Validators.required],
-      distance: ['10', Validators.required],
-      category: [`${this.categories[0]}`, Validators.required],
-      location: ['', Validators.required],
-      'auto-detect': false
-    });
   }
 
   onSubmit(form: FormGroup) {
@@ -91,7 +91,7 @@ export class SearchComponent implements OnInit {
     this.noResultsVisible = false;
     this.resultTableVisible = false;
 
-    form.value.keyword = this.selectedKeyword.trim();
+    form.value.keyword = this.searchKeywordsCtrl.getRawValue().trim();
 
     if (form.controls['auto-detect'].value) { // if checkbox checked
       this.useIpinfo(form);
