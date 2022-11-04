@@ -190,6 +190,8 @@ export class SearchComponent implements OnInit {
     this.bizID = data;
   }
 
+
+
   removeHash() {
     history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
   }
