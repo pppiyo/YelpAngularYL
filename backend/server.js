@@ -91,17 +91,22 @@ app.get('/details', function (req, res) {
 })
 
 
-/*
+
 // call review
-axios({
-    method: 'get',
-    url: 'https://api.yelp.com/v3/businesses/FmGF1B-Rpsjq1f5b56qMwg/reviews',
-    headers: { 'Authorization': `Bearer ${apiKey}` },
-    params: { 'text': 'Ramen' }
-}).then(function (response) {
-    console.log(response.data);
-});
-*/
+app.get('/reviews', function (req, res) {
+    let id = req.query.id;
+
+    // id = 'PXYKRPkEcf4Mczfp_AfP0w';
+    axios({
+        method: 'get',
+        url: 'https://api.yelp.com/v3/businesses/' + id + '/reviews',
+        headers: { 'Authorization': `Bearer ${apiKey}` },
+        // params: { 'text': 'Ramen' }
+    }).then(function (response) {
+        console.log(response.data)
+        res.status(200).send(response.data);
+    });
+})
 
 
 

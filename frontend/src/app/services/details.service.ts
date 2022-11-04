@@ -20,7 +20,7 @@ export class DetailsService {
     let yelpDetails = this.httpClient.get<any>(urlCall)
       .subscribe((data: BizDetails) => {
         this.bizDetails = data;
-        console.log(this.bizDetails);
+        // console.log(this.bizDetails);
         return this.bizDetails;
       });
   }

@@ -26,6 +26,7 @@ import { DetailsService } from './services/details.service';
 import { GoogleMapsModule } from '@angular/google-maps';
 import { DetailsTextComponent } from './components/details-text/details-text.component';
 import { CarouselComponent } from './components/carousel/carousel.component';
+import { ReviewsComponent } from './components/reviews/reviews.component';
 
 
 @NgModule({
@@ -41,6 +42,7 @@ import { CarouselComponent } from './components/carousel/carousel.component';
     NoResultsComponent,
     DetailsTextComponent,
     CarouselComponent,
+    ReviewsComponent,
 
   ],
   imports: [

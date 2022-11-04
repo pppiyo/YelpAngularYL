@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { DetailsService } from 'src/app/services/details.service';
 import { BizDetails } from 'src/app/shared/models/BizDetails';
@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
+import { Review } from 'src/app/shared/models/Review';
 
 @Component({
   selector: 'app-details',
@@ -16,7 +17,8 @@ export class DetailsComponent implements OnInit {
 
   @Input() bizID = '';
 
-
+  public bizDetails: BizDetails;
+  // public review: Review;
 
   mapOptions: google.maps.MapOptions = {
     center: { lat: 38.9987208, lng: -77.2538699 },
@@ -26,29 +28,21 @@ export class DetailsComponent implements OnInit {
     position: { lat: 38.9987208, lng: -77.2538699 },
   }
 
-  public bizDetails: BizDetails;
-
-  public encodedUrlTw: string;
-  public encodedUrlFb: string;
-
-
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
+    console.log(this.bizID);
+
     this.getBizDetails(this.bizID);
 
-    this.encodedUrlTw = encodeURI("https://twitter.com/intent/tweet?text=Check" + this.bizDetails.name + "on yelp." + this.bizDetails.yelpLink);
-    // this.encodedUrlTw = encodeURIComponent("https://twitter.com/intent/tweet?text=Check" + this.bizDetails.name + "on yelp." + this.bizDetails.yelpLink);
 
-    this.encodedUrlFb = encodeURI("https://www.facebook.com/sharer/sharer.php?u=" + this.bizDetails.yelpLink + "&quote=" + this.bizDetails.name + "on yelp.");
-    // this.encodedUrlFb = encodeURIComponent("https://www.facebook.com/sharer/sharer.php?u=" + this.bizDetails.yelpLink + "&quote=" + this.bizDetails.name + "on yelp.");
   }
 
   getBizDetails(id: string) {
     let urlCall = `${GlobalConstants.API_URL}/details?id=${id}`;
     this.httpClient.get<any>(urlCall)
       .subscribe((data: any) => {
-        console.log(data);
+        // console.log(data);
 
         // name
         let name = 'N/A';
@@ -130,22 +124,46 @@ export class DetailsComponent implements OnInit {
         this.bizDetails = bizDetails;
       });
   }
+
+  backToTable() {
+    // resultTableVisible = true;
+  }
+
+  // @Output()
+  // notify: EventEmitter<string> = new EventEmitter<string>();
+
+  // showDetails(event: any, resultTableVisible: any) {
+  //   this.notify.emit(resultTableVisible);
+  // }
+
+  // getReviews(id: string) {
+  //   fetch(GlobalConstants.API_URL + "/reviews?id=" + id).then(
+  //     (response) => response.json()
+  //   ).then(
+  //     (jsonResponse) => {
+  //       // console.log(jsonResponse['reviews']);
+  //       let result = jsonResponse['reviews'];
+  //       if (!result || result.length == 0) {
+  //       }
+  //       else {
+  //         // update result table from here.
+  //         // this.reviews
+  //         for (let i = 0; i < Math.min(GlobalConstants.REVIEW_ITEM_NUM, result.length); i++) {
+  //           let element = {
+  //             'id': result[i]['id'],
+  //             'username': result[i]['user']['name'],
+  //             'rating': result[i]['rating'] + '/5',
+  //             'text': result[i]['text'],
+  //             'date': result[i]['time_created'].substring(0, 10),
+  //           };
+  //           this.reviews.push(element);
+  //           console.log(this.reviews[i]);
+  //         }
+  //       }
+  //     }
+  //   )
+  // }
+
 }
-
-        // console.log(this.bizDetails);
-        // this.bizDetails.photosURL = data.photos;
-        // console.log(data.id);
-        // console.log(data.name);
-        // console.log(data.hours[0].is_open_now);
-        // console.log(data.display_phone);
-        // console.log(data.url);
-        // console.log(data.price);
-        // console.log(data.photos);
-        // console.log(data.location.display_address);
-        // console.log(data.categories);
-
-
-
-
 
 

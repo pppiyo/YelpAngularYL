@@ -1,15 +1,13 @@
 <div class="text-center mb-5">
   <div style="margin:0 auto; max-width: 1000px;">
-    <!-- </div> -->
-    <!-- <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4"> -->
     <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4" style="margin:2%;">
+      <div class="text-start mt-4 ms-3">
+        <mat-icon (click)="backToTable()">keyboard_backspace</mat-icon>
+      </div>
 
-      <h1 class="text-center mt-5">{{bizDetails.name}}</h1>
+      <h1 class=" text-center mt-3">{{bizDetails.name}}</h1>
 
-      <!-- <mat-tab-group mat-align-tabs="center" color="black"> -->
       <mat-tab-group mat-align-tabs="center" backgroundColor="accent">
-        <!-- <mat-tab-group mat-align-tabs="center" [backgroundColor]="'red'"> -->
-        <!-- <mat-tab-group mat-align-tabs="center" style="background-color: brown;"> -->
         <mat-tab label="Business details">
           <app-details-text [bizDetails]="bizDetails"></app-details-text>
 
@@ -20,10 +18,15 @@
           </div>
 
           <div class="text-center mb-3">Share on:
-            <a href={{encodedUrlTw}}><img
-                src="https://upload.wikimedia.org/wikipedia/sco/9/9f/Twitter_bird_logo_2012.svg" class="smIcon"></a>
-            <a href={{encodedUrlFb}}><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
+            <a href="{{'https://twitter.com/intent/tweet?text=Check%20' + bizDetails.name + '%20on%20yelp.%0A' + bizDetails.yelpLink}}"
+              target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/sco/9/9f/Twitter_bird_logo_2012.svg" class="smIcon">
+            </a>
+
+            <a href="{{'https://www.facebook.com/sharer/sharer.php?quote=Check%20' + bizDetails.name + '%20on%20yelp.%0A&u=' + bizDetails.yelpLink}}"
+              target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
                 class="smIcon"></a>
+
           </div>
           <app-carousel [photos]="bizDetails.photosURL"></app-carousel>
         </mat-tab>
@@ -36,7 +39,9 @@
           </div>
         </mat-tab>
 
-        <mat-tab label="Reviews">Reviews</mat-tab>
+        <mat-tab label="Reviews">
+          <app-reviews [bizDetails]="bizDetails"></app-reviews>
+        </mat-tab>
       </mat-tab-group>
     </div>
   </div>
