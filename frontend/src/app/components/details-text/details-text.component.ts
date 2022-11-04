@@ -7,6 +7,16 @@ import { BizDetails } from 'src/app/shared/models/BizDetails';
   styleUrls: ['./details-text.component.css']
 })
 export class DetailsTextComponent implements OnInit {
+  public getColor(status: string): string {
+    if (status == "Closed") {
+      return "red";
+    } else if (status == "Open now") {
+      return "green";
+    } else {
+      return "black";
+    }
+  }
+
   @Input() bizDetails: BizDetails;
   constructor() { }
 
