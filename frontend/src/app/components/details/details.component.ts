@@ -16,6 +16,8 @@ export class DetailsComponent implements OnInit {
 
   @Input() bizID = '';
 
+
+
   mapOptions: google.maps.MapOptions = {
     center: { lat: 38.9987208, lng: -77.2538699 },
     zoom: 14
@@ -26,11 +28,20 @@ export class DetailsComponent implements OnInit {
 
   public bizDetails: BizDetails;
 
+  public encodedUrlTw: string;
+  public encodedUrlFb: string;
+
 
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.getBizDetails(this.bizID);
+
+    this.encodedUrlTw = encodeURI("https://twitter.com/intent/tweet?text=Check" + this.bizDetails.name + "on yelp." + this.bizDetails.yelpLink);
+    // this.encodedUrlTw = encodeURIComponent("https://twitter.com/intent/tweet?text=Check" + this.bizDetails.name + "on yelp." + this.bizDetails.yelpLink);
+
+    this.encodedUrlFb = encodeURI("https://www.facebook.com/sharer/sharer.php?u=" + this.bizDetails.yelpLink + "&quote=" + this.bizDetails.name + "on yelp.");
+    // this.encodedUrlFb = encodeURIComponent("https://www.facebook.com/sharer/sharer.php?u=" + this.bizDetails.yelpLink + "&quote=" + this.bizDetails.name + "on yelp.");
   }
 
   getBizDetails(id: string) {
