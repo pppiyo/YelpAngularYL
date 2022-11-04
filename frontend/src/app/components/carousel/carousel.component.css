@@ -1,0 +1,14 @@
+img {
+  width: 400px;
+  height: 400px;
+  object-fit: cover;
+  margin: 0 auto;
+}
+
+.carousel-control-next,
+.carousel-control-prev
+
+/*, .carousel-indicators */
+  {
+  filter: invert(90%);
+}

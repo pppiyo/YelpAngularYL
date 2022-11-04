@@ -23,6 +23,9 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { NoResultsComponent } from './components/no-results/no-results.component';
 import { DetailsService } from './services/details.service';
+import { GoogleMapsModule } from '@angular/google-maps';
+import { DetailsTextComponent } from './components/details-text/details-text.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
 
 
 @NgModule({
@@ -36,6 +39,8 @@ import { DetailsService } from './services/details.service';
     ResultTableComponent,
     AutoCompleteComponent,
     NoResultsComponent,
+    DetailsTextComponent,
+    CarouselComponent,
 
   ],
   imports: [
@@ -54,6 +59,7 @@ import { DetailsService } from './services/details.service';
     MatTabsModule,
     BrowserAnimationsModule,
     MatProgressSpinnerModule,
+    GoogleMapsModule,
   ],
   providers: [SearchService, DetailsService],
   bootstrap: [AppComponent]

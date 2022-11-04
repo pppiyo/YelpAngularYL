@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit {
   filteredKeywords: string[];
   isLoading = false;
   errorMsg!: string;
-  minLengthTerm = 3;
+
   selectedKeyword: any = "";
   searchKeywordsCtrl = new FormControl();
   filteredKeyword: any;
@@ -52,7 +52,7 @@ export class SearchComponent implements OnInit {
     this.searchKeywordsCtrl.valueChanges
       .pipe(
         filter(res => {
-          return res !== null && res.length >= this.minLengthTerm
+          return res !== null && res.length >= GlobalConstants.MIN_LENGTH_TERM
         }),
         distinctUntilChanged(),
         debounceTime(1000),

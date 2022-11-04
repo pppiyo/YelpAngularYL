@@ -14,9 +14,18 @@ import { map } from 'rxjs/operators'
 })
 export class DetailsComponent implements OnInit {
 
+  @Input() bizID = '';
+
+  mapOptions: google.maps.MapOptions = {
+    center: { lat: 38.9987208, lng: -77.2538699 },
+    zoom: 14
+  }
+  marker = {
+    position: { lat: 38.9987208, lng: -77.2538699 },
+  }
+
   public bizDetails: BizDetails;
 
-  @Input() bizID = '';
 
   constructor(private httpClient: HttpClient) { }
 
@@ -28,43 +37,88 @@ export class DetailsComponent implements OnInit {
     let urlCall = `${GlobalConstants.API_URL}/details?id=${id}`;
     this.httpClient.get<any>(urlCall)
       .subscribe((data: any) => {
+        console.log(data);
 
-        let addr = '';
-        for (let i = 0; i < data.location.display_address.length; i++) {
-          addr = addr + data.location.display_address[i] + " ";
+        // name
+        let name = 'N/A';
+        if (data.name) {
+          name = data.name;
         }
 
-        let cate = '';
-        for (let i = 0; i < data.categories.length; i++) {
-          if (i == data.categories.length - 1) {
-            cate = cate + data.categories[i]['title'];
+        // status
+        let stat = 'N/A';
+        if (data.hours) {
+          if (data.hours[0].is_open_now) {
+            stat = 'Open now';
           } else {
-            cate = cate + data.categories[i]['title'] + ' | ';
+            stat = 'Closed';
           }
         }
 
-        let stat = 'Closed';
-        if (data.hours[0].is_open_now) {
-          stat = 'Open';
+        // phone
+        let phone = 'N/A';
+        if (data.display_phone) {
+          phone = data.display_phone;
+        }
+
+        // yelp url
+        let yelpURL = 'N/A';
+        if (data.url) {
+          yelpURL = data.url;
+        };
+
+        // price
+        let price = 'N/A';
+        if (data.price) {
+          price = data.price;
+        };
+
+        // photos
+        let photos: string[];
+        photos = [];
+        if (data.photos) {
+          photos = data.photos;
+        };
+
+        // address
+        let addr = '';
+        if (data.location.display_address) {
+          for (let i = 0; i < data.location.display_address.length; i++) {
+            addr = addr + data.location.display_address[i] + " ";
+          }
+        } else {
+          addr = 'N/A';
+        }
+
+        // category
+        let cate = '';
+        if (data.categories) {
+          for (let i = 0; i < data.categories.length; i++) {
+            if (i == data.categories.length - 1) {
+              cate = cate + data.categories[i]['title'];
+            } else {
+              cate = cate + data.categories[i]['title'] + ' | ';
+            }
+          }
+        } else {
+          cate = 'N/A';
         }
 
         let bizDetails = {
           'id': data.id,
-          'name': data.name,
+          'name': name,
           'status': stat,
           'address': addr,
           'category': cate,
-          'phone': data.display_phone,
-          'price': data.price,
-          'yelpLink': data.url,
-          'photosURL': data.photos,
+          'phone': phone,
+          'price': price,
+          'yelpLink': yelpURL,
+          'photosURL': photos,
         }
 
         this.bizDetails = bizDetails;
-
       });
   }
-
 }
 
         // console.log(this.bizDetails);

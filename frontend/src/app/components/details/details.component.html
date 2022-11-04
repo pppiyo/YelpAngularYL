@@ -1,50 +1,111 @@
-<div style="margin:0 auto; max-width: 1000px;">
+<div class="text-center mb-5">
+  <div style="margin:0 auto; max-width: 1000px;">
+    <!-- </div> -->
+    <!-- <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4"> -->
+    <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4" style="margin:2%;">
+
+      <h1 class="text-center mt-5">{{bizDetails.name}}</h1>
+
+      <!-- <mat-tab-group mat-align-tabs="center" color="black"> -->
+      <mat-tab-group mat-align-tabs="center" backgroundColor="accent">
+        <!-- <mat-tab-group mat-align-tabs="center" [backgroundColor]="'red'"> -->
+        <!-- <mat-tab-group mat-align-tabs="center" style="background-color: brown;"> -->
+        <mat-tab label="Business details">
+          <app-details-text [bizDetails]="bizDetails"></app-details-text>
+
+          <div class="text-center mb-5">
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
+              Reserve Now
+            </button>
+          </div>
+          <!-- <app-reservation [name]="bizDetails.name"></app-reservation> -->
+          <app-carousel [photos]="bizDetails.photosURL"></app-carousel>
+        </mat-tab>
+
+        <mat-tab label="Map location">
+          <div class="my-google-map">
+            <google-map>
+              <map-marker></map-marker>
+            </google-map>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Reviews">Reviews</mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+
 </div>
-<div id="detailsCard" class="card shadow-2-strong card-registration rounded-4" style="margin:2%;">
 
-  <p class="title">{{bizDetails.name}}</p>
 
-  <mat-tab-group mat-align-tabs="center" backgroundColor="warn">
-    <mat-tab label="Business details">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6">
-            <div class="subArea" id="addr">
-              <p id="addressHead" class="subheading">Address</p>
-              <p id="address" class="infotext">{{bizDetails.address}}</p>
-            </div>
-            <div class="subArea" id="phon">
-              <p id="phoneNumberHead" class="subheading">Phone</p>
-              <p id="phoneNumber" class="infotext">{{bizDetails.phone}}</p>
-            </div>
-            <div class="subArea" id="stat">
-              <p id="statusHead" class="subheading">Status</p>
-              <p id="status" class="infotext">{{bizDetails.status}}</p>
-            </div>
-          </div>
-          <div class="col-md-6">
-            <div class="subArea" id="cate">
-              <p id="categoryHead" class="subheading">Category</p>
-              <p id="category" class="infotext">{{bizDetails.category}}</p>
-            </div>
-            <div class="subArea" id="pric">
-              <p id="priceHead" class="subheading">Price range</p>
-              <p id="price" class="infotext">{{bizDetails.price}}</p>
-            </div>
-            <div class="subArea" id="more">
-              <p id="moreInfoHead" class="subheading">Visit yelp for more</p>
-              <p id="moreInfo" class="infotext"><a href={{bizDetails.yelpLink}} target="_blank">Business link</a>
-              </p>
-            </div>
-          </div>
-        </div>
-        <div class="row">
-          {{bizDetails.photosURL}}
-        </div>
+<!-- <app-reservation [name]="bizDetails.name"></app-reservation> -->
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title mb-0" id="exampleModalLabel">Reservation form</h1>
       </div>
+      <div class="modal-body">
+        <p class="text-center">{{bizDetails.name}}</p>
+        <form action="" class="resInfo">
+          <div class="mb-3">
+            <!-- <div class="row mb-3"> -->
+            <label for="email" class="control-label">Email</label>
+            <input type="email" class="form-control" id="email" required>
+          </div>
 
-    </mat-tab>
-    <mat-tab label="Map location">Map location</mat-tab>
-    <mat-tab label="Reviews">Reviews</mat-tab>
-  </mat-tab-group>
+          <!-- <div class="row mb-3"> -->
+          <div class="mb-3">
+            <label for="date" class="control-label">Date</label>
+            <!-- <input type="date" id="date" required> -->
+            <input type="date" class="form-control" id="date" required>
+          </div>
+          <!-- <input type="text" data-plugin-datepicker class="form-control  date-picker" data-date-format="mm-dd-yyyy"> -->
+
+          <!-- <div class="input-group date" id="datepicker">
+                <input type="text" class="form-control" id="date" />
+                <span class="input-group-append">
+                  <span class="input-group-text bg-light d-block">
+                    <i class="fa fa-calendar"></i>
+                  </span>
+                </span>
+              </div> -->
+          <!-- <input type="date" class="form-control" data-date="12/03/2020" data-date-format="MM/DD/YYYY"> -->
+
+          <div class="row mb-3">
+            <label for="hour" class="control-label">Time</label>
+            <div class="w-20 col-md-3">
+              <select class=" form-select" id="hour" required>
+                <option>10</option>
+                <option>11</option>
+                <option>12</option>
+                <option>13</option>
+                <option>14</option>
+                <option>15</option>
+                <option>16</option>
+                <option>17</option>
+              </select>
+            </div>
+            :
+            <div class="col-md-3">
+              <select class="form-select" id="minute" required>
+                <option>00</option>
+                <option>15</option>
+                <option>30</option>
+                <option>45</option>
+              </select>
+            </div>
+          </div>
+          <div class="text-center">
+            <button type="button" class="btn btn-danger" id="submit">Submit</button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>
