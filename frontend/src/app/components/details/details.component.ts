@@ -128,41 +128,6 @@ export class DetailsComponent implements OnInit {
     // resultTableVisible = true;
   }
 
-  // @Output()
-  // notify: EventEmitter<string> = new EventEmitter<string>();
-
-  // showDetails(event: any, resultTableVisible: any) {
-  //   this.notify.emit(resultTableVisible);
-  // }
-
-  // getReviews(id: string) {
-  //   fetch(GlobalConstants.API_URL + "/reviews?id=" + id).then(
-  //     (response) => response.json()
-  //   ).then(
-  //     (jsonResponse) => {
-  //       // console.log(jsonResponse['reviews']);
-  //       let result = jsonResponse['reviews'];
-  //       if (!result || result.length == 0) {
-  //       }
-  //       else {
-  //         // update result table from here.
-  //         // this.reviews
-  //         for (let i = 0; i < Math.min(GlobalConstants.REVIEW_ITEM_NUM, result.length); i++) {
-  //           let element = {
-  //             'id': result[i]['id'],
-  //             'username': result[i]['user']['name'],
-  //             'rating': result[i]['rating'] + '/5',
-  //             'text': result[i]['text'],
-  //             'date': result[i]['time_created'].substring(0, 10),
-  //           };
-  //           this.reviews.push(element);
-  //           console.log(this.reviews[i]);
-  //         }
-  //       }
-  //     }
-  //   )
-  // }
-
 }
 
 
