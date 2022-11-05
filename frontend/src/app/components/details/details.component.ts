@@ -35,7 +35,6 @@ export class DetailsComponent implements OnInit {
 
     this.getBizDetails(this.bizID);
 
-
   }
 
   getBizDetails(id: string) {

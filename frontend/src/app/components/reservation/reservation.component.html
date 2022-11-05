@@ -1,73 +1,75 @@
-Button trigger modal
-<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-  Reserve Now
-</button>
-<!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h1 class="modal-title mb-0" id="exampleModalLabel">Reservation form</h1>
-      </div>
-      <div class="modal-body">
-        <!-- <p class="text-center">{{name}}</p> -->
-        <form action="" class="resInfo">
-          <div class="mb-3">
-            <!-- <div class="row mb-3"> -->
-            <label for="email" class="control-label">Email</label>
-            <input type="email" class="form-control" id="email" required>
-          </div>
-
-          <!-- <div class="row mb-3"> -->
-          <div class="mb-3">
-            <label for="date" class="control-label">Date</label>
-            <!-- <input type="date" id="date" required> -->
-            <input type="date" class="form-control" id="date" required>
-          </div>
-          <!-- <input type="text" data-plugin-datepicker class="form-control  date-picker" data-date-format="mm-dd-yyyy"> -->
-
-          <!-- <div class="input-group date" id="datepicker">
-                <input type="text" class="form-control" id="date" />
-                <span class="input-group-append">
-                  <span class="input-group-text bg-light d-block">
-                    <i class="fa fa-calendar"></i>
-                  </span>
-                </span>
-              </div> -->
-          <!-- <input type="date" class="form-control" data-date="12/03/2020" data-date-format="MM/DD/YYYY"> -->
-
-          <div class="row mb-3">
-            <label for="hour" class="control-label">Time</label>
-            <div class="w-20 col-md-3">
-              <select class=" form-select" id="hour" required>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-              </select>
-            </div>
-            :
-            <div class="col-md-3">
-              <select class="form-select" id="minute" required>
-                <option>00</option>
-                <option>15</option>
-                <option>30</option>
-                <option>45</option>
-              </select>
-            </div>
-          </div>
-          <div class="text-center">
-            <button type="button" class="btn btn-danger" id="submit">Submit</button>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+<div class="register-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-2">
+      <div class="form-group">
+        <label for="email" class="control-label">Email</label>
+        <input type="text" class="form-control" formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" id="email" required>
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+        </div>
       </div>
     </div>
-  </div>
+
+    <div class="mb-2">
+      <div class="form-group">
+        <label for="date" class="control-label">Date</label>
+        <input type="date" class="form-control" formControlName="date"
+          [ngClass]="{ 'is-invalid': submitted && f['date'].errors }" id="date" required>
+        <div *ngIf="submitted && f['date'].errors" class="invalid-feedback">
+          <div *ngIf="f['date'].errors['required']">Date is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4" style="align-items: center;">
+
+      <label for="hour" class="control-label">Time</label>
+      <div class="col-md-3">
+        <div class="form-group">
+          <select class="form-select" id="hour" formControlName="hour"
+            [ngClass]="{ 'is-invalid': submitted && f['hour'].errors }" required>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+          </select>
+          <div *ngIf="submitted && f['hour'].errors" class="invalid-feedback">
+          </div>
+        </div>
+      </div>
+
+      :
+
+      <div class="col-md-3">
+        <div class="form-group">
+          <!-- <label for="minute" class="control-label"></label> -->
+          <select class="form-select" id="minute" formControlName="minute"
+            [ngClass]="{ 'is-invalid': submitted && f['minute'].errors }" required>
+            <option>00</option>
+            <option>15</option>
+            <option>30</option>
+            <option>45</option>
+          </select>
+          <div *ngIf="submitted && f['minute'].errors" class="invalid-feedback">
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-1" style="padding-left: 0px;">
+        <!-- <label for="" class="control-label"></label> -->
+        <mat-icon>schedule</mat-icon>
+      </div>
+
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-danger" id="submit">Submit</button>
+    </div>
+  </form>
 </div>

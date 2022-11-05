@@ -103,8 +103,6 @@ export class SearchComponent implements OnInit {
       params.set('categories', form.value.category);
       params.set('location', form.value.location);
 
-      // console.log(params.toString()); // DEBUG
-
       let query: string = params.toString();
       this.sendForm(query);
     }
@@ -133,8 +131,6 @@ export class SearchComponent implements OnInit {
         params.set('categories', form.value.category);
         params.set('latitude', lat);
         params.set('longitude', lng);
-
-        // console.log(params.toString()); // DEBUG
 
         let query: string = params.toString();
         this.sendForm(query);
@@ -183,7 +179,6 @@ export class SearchComponent implements OnInit {
   }
 
   showDetailsPMethod(data: any) {
-    // console.log('this is data: ' + data);
     this.noResultsVisible = false;
     this.resultTableVisible = false;
     this.detailsVisible = true;

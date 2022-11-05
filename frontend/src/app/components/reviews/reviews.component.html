@@ -1,26 +1,11 @@
-<!-- <table class="table table-striped rounded-4">
-  <thead>
-  </thead>
-  <tbody>
-    <tr *ngFor="let review of reviews">
-      <td>{{review.username}} + {{ review.rating }} + {{ review.text }} + {{ review.date }}</td>
-    </tr>
-  </tbody>
-</table> -->
-
-
 <table class="table table-striped">
   <thead>
   </thead>
   <tbody>
-    <!-- <tr>this is a review</tr> -->
     <tr class="text-start" *ngFor=" let review of reviews">
       <td><b>{{review.username}}</b> <br /> {{ review.rating }}<br /><br> {{ review.text }}<br /> <br>{{ review.date
         }}<br><br>
       </td>
     </tr>
-    <!-- <td>{{reviews}}</td> -->
   </tbody>
 </table>
-
-<!-- <p>hi</p> -->

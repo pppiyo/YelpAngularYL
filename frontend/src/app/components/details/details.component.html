@@ -45,11 +45,8 @@
       </mat-tab-group>
     </div>
   </div>
-
 </div>
 
-
-<!-- <app-reservation [name]="bizDetails.name"></app-reservation> -->
 
 <!-- Modal -->
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -60,30 +57,26 @@
       </div>
       <div class="modal-body">
         <h1 class="text-center">{{bizDetails.name}}</h1>
-        <form action="" class="resInfo">
+        <app-reservation></app-reservation>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <form action="" class="resInfo">
           <div class="mb-3">
-            <!-- <div class="row mb-3"> -->
             <label for="email" class="control-label">Email</label>
             <input type="email" class="form-control" id="email" required>
           </div>
 
-          <!-- <div class="row mb-3"> -->
           <div class="mb-3">
             <label for="date" class="control-label">Date</label>
-            <!-- <input type="date" id="date" required> -->
             <input type="date" class="form-control" id="date" required>
           </div>
-          <!-- <input type="text" data-plugin-datepicker class="form-control  date-picker" data-date-format="mm-dd-yyyy"> -->
-
-          <!-- <div class="input-group date" id="datepicker">
-                <input type="text" class="form-control" id="date" />
-                <span class="input-group-append">
-                  <span class="input-group-text bg-light d-block">
-                    <i class="fa fa-calendar"></i>
-                  </span>
-                </span>
-              </div> -->
-          <!-- <input type="date" class="form-control" data-date="12/03/2020" data-date-format="MM/DD/YYYY"> -->
 
           <div class="row mb-3">
             <label for="hour" class="control-label">Time</label>
@@ -112,11 +105,4 @@
           <div class="text-center">
             <button type="button" class="btn btn-danger" id="submit">Submit</button>
           </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
+        </form> -->
