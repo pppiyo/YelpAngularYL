@@ -26,7 +26,8 @@
     <div class="row mb-4" style="align-items: center;">
 
       <label for="hour" class="control-label">Time</label>
-      <div class="col-md-3">
+      <div class="col-md-3 w-30">
+        <!-- <div class="col-md-3 d-md-flex"> -->
         <div class="form-group">
           <select class="form-select" id="hour" formControlName="hour"
             [ngClass]="{ 'is-invalid': submitted && f['hour'].errors }" required>
@@ -46,9 +47,9 @@
 
       :
 
-      <div class="col-md-3">
+      <div class="col-md-3 w-30">
+        <!-- <div class="col-md-3 d-md-flex"> -->
         <div class="form-group">
-          <!-- <label for="minute" class="control-label"></label> -->
           <select class="form-select" id="minute" formControlName="minute"
             [ngClass]="{ 'is-invalid': submitted && f['minute'].errors }" required>
             <option>00</option>
@@ -62,7 +63,6 @@
       </div>
 
       <div class="col-md-1" style="padding-left: 0px;">
-        <!-- <label for="" class="control-label"></label> -->
         <mat-icon>schedule</mat-icon>
       </div>
 

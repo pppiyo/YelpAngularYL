@@ -31,6 +31,7 @@ export class SearchComponent implements OnInit {
 
   selectedKeyword: any = "";
   searchKeywordsCtrl = new FormControl();
+  autoDetectCtrl = new FormControl();
   filteredKeyword: any;
 
   constructor(private fb: FormBuilder, private searchServ: SearchService, private http: HttpClient) { }
@@ -42,9 +43,9 @@ export class SearchComponent implements OnInit {
   ngOnInit() {
     this.userInput = this.fb.group({
       keyword: ['', Validators.required],
-      // keyword: [this.selectedKeyword, Validators.required],
       distance: ['10', Validators.required],
       category: [`${this.categories[0]}`, Validators.required],
+      // location: [''],
       location: ['', Validators.required],
       'auto-detect': false
     });
@@ -84,6 +85,16 @@ export class SearchComponent implements OnInit {
           this.filteredKeywords = fk;
         }
       });
+
+    // this.autoDetectCtrl.valueChanges
+    //   .subscribe(value => {
+    //     alert(value);
+    //     if (value) {
+    //       this.userInput.controls['location'].setValidators(Validators.required);
+    //     } else {
+    //       this.userInput.controls['location'].setValidators(Validators.nullValidator);
+    //     }
+    //   });
   }
 
   onSubmit(form: FormGroup) {
@@ -94,6 +105,7 @@ export class SearchComponent implements OnInit {
     form.value.keyword = this.searchKeywordsCtrl.getRawValue().trim();
 
     if (form.controls['auto-detect'].value) { // if checkbox checked
+      alert('using ipinfo');
       this.useIpinfo(form);
     }
     else {
