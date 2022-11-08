@@ -9,15 +9,23 @@ import { map } from 'rxjs/operators'
 import { Review } from 'src/app/shared/models/Review';
 import { ReservationComponent } from '../reservation/reservation.component';
 
+declare var $: any;
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent implements OnInit {
+  @ViewChild('closebutton') closebutton: any;
+
 
   public isReserved = false;
   public bizDetails: BizDetails;
+
+  public isTableVisible = false;
+  public hideModal = false;
+
+  @Output() showTable = new EventEmitter<boolean>();
 
   @ViewChild(ReservationComponent, { static: true }) child: ReservationComponent;
 
@@ -38,6 +46,8 @@ export class DetailsComponent implements OnInit {
 
   changeReservStat(eventData: boolean) {
     this.isReserved = eventData;
+    // this.hideModal = true;
+    this.closebutton.nativeElement.click();
   }
 
   mapOptions: google.maps.MapOptions = {
@@ -49,16 +59,9 @@ export class DetailsComponent implements OnInit {
   }
 
   constructor(private httpClient: HttpClient) { }
-  // constructor(private httpClient: HttpClient, private bookingServ: BookingService) { }
 
   ngOnInit(): void {
-    // console.log(this.bizID);
-
     this.getBizDetails(this.bizID);
-
-    // this.bookingServ.sharedMessage.subscribe(message => this.message = message)
-
-
   }
 
   getBizDetails(id: string) {
@@ -149,10 +152,9 @@ export class DetailsComponent implements OnInit {
   }
 
   backToTable() {
-    // resultTableVisible = true;
+    this.isTableVisible = true;
+    this.showTable.emit(this.isTableVisible);
   }
-
-
 
 }
 

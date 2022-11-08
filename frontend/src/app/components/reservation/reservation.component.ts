@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { BizDetails } from 'src/app/shared/models/BizDetails';
@@ -11,6 +11,7 @@ import { Booking } from 'src/app/shared/models/Booking';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
+
   form: FormGroup;
   submitted = false;
   booked: any[] = [];
@@ -33,7 +34,6 @@ export class ReservationComponent implements OnInit {
   }
 
   onSubmittedChange() {
-    alert('submit status changed!');
     this.isReserved.emit(this.submitted);
   }
 
@@ -43,6 +43,7 @@ export class ReservationComponent implements OnInit {
 
   cancelBooking() {
     this.form.reset();
+    alert("Reservation cancelled!");
     this.submitted = false;
     this.onSubmittedChange();
   }
@@ -75,6 +76,7 @@ export class ReservationComponent implements OnInit {
       localStorage.setItem(id, JSON.stringify(booking));
 
       alert("Reservation created!");
+
     } else {
       alert("Sorry! No Web Storage support..");
     }

@@ -81,5 +81,4 @@
 
 <app-result-table *ngIf="resultTableVisible" (notify)="showDetailsPMethod($event)"></app-result-table>
 
-<app-details *ngIf="detailsVisible" [bizID]="bizID"></app-details>
-<!-- <app-reservation *ngIf=""></app-reservation> -->
+<app-details *ngIf="detailsVisible" (showTable)="showResultTable($event)" [bizID]="bizID"></app-details>

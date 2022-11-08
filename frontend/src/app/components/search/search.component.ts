@@ -95,6 +95,7 @@ export class SearchComponent implements OnInit {
   }
 
   locationDisable() {
+    this.userInput.get('location')?.reset();
     this.userInput.get('location')?.disable();
   }
 
@@ -201,6 +202,11 @@ export class SearchComponent implements OnInit {
     this.resultTableVisible = false;
     this.detailsVisible = true;
     this.bizID = data;
+  }
+
+  showResultTable(eventData: boolean) {
+    this.resultTableVisible = eventData;
+    this.detailsVisible = !this.resultTableVisible;
   }
 
 
