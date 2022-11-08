@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewEncapsulation } from '@angular/core';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { DetailsService } from 'src/app/services/details.service';
 import { BizDetails } from 'src/app/shared/models/BizDetails';
@@ -13,21 +13,22 @@ declare var $: any;
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
-  styleUrls: ['./details.component.css']
+  styleUrls: ['./details.component.css'],
+  encapsulation: ViewEncapsulation.None,
 })
 export class DetailsComponent implements OnInit {
   @ViewChild('closebutton') closebutton: any;
-
+  @ViewChild(ReservationComponent, { static: true }) child: ReservationComponent;
+  @Input() bizID = '';
+  @Output() showTable = new EventEmitter<boolean>();
 
   public isReserved = false;
   public bizDetails: BizDetails;
-
   public isTableVisible = false;
   public hideModal = false;
 
-  @Output() showTable = new EventEmitter<boolean>();
-
-  @ViewChild(ReservationComponent, { static: true }) child: ReservationComponent;
+  mapOptions: google.maps.MapOptions;
+  marker: any;
 
   cancelBooking() {
     this.child.cancelBooking();
@@ -41,22 +42,20 @@ export class DetailsComponent implements OnInit {
     }
   }
 
-  @Input() bizID = '';
-
-
   changeReservStat(eventData: boolean) {
     this.isReserved = eventData;
-    // this.hideModal = true;
     this.closebutton.nativeElement.click();
   }
 
-  mapOptions: google.maps.MapOptions = {
-    center: { lat: 38.9987208, lng: -77.2538699 },
-    zoom: 14
-  }
-  marker = {
-    position: { lat: 38.9987208, lng: -77.2538699 },
-  }
+
+
+  // mapOptions: google.maps.MapOptions = {
+  //   center: { lat: 38.9987208, lng: -77.2538699 },
+  //   zoom: 14
+  // }
+  // marker = {
+  //   position: { lat: 38.9987208, lng: -77.2538699 },
+  // }
 
   constructor(private httpClient: HttpClient) { }
 
@@ -68,7 +67,6 @@ export class DetailsComponent implements OnInit {
     let urlCall = `${GlobalConstants.API_URL}/details?id=${id}`;
     this.httpClient.get<any>(urlCall)
       .subscribe((data: any) => {
-        // console.log(data);
 
         // name
         let name = 'N/A';
@@ -148,6 +146,16 @@ export class DetailsComponent implements OnInit {
         }
 
         this.bizDetails = bizDetails;
+
+
+        // map locatiions update:
+        this.mapOptions = {
+          'center': { 'lat': data.coordinates.latitude, 'lng': data.coordinates.longitude },
+          'zoom': 14
+        }
+        this.marker = {
+          position: { 'lat': data.coordinates.latitude, 'lng': data.coordinates.longitude },
+        }
       });
   }
 
