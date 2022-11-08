@@ -16,15 +16,29 @@ import { ReservationComponent } from '../reservation/reservation.component';
 })
 export class DetailsComponent implements OnInit {
 
+  public isReserved = false;
+  public bizDetails: BizDetails;
+
   @ViewChild(ReservationComponent, { static: true }) child: ReservationComponent;
 
   cancelBooking() {
     this.child.cancelBooking();
   }
 
+  updateColor(status: boolean): string {
+    if (status) {
+      return "red";
+    } else {
+      return "blue";
+    }
+  }
+
   @Input() bizID = '';
 
-  public bizDetails: BizDetails;
+
+  changeReservStat(eventData: boolean) {
+    this.isReserved = eventData;
+  }
 
   mapOptions: google.maps.MapOptions = {
     center: { lat: 38.9987208, lng: -77.2538699 },

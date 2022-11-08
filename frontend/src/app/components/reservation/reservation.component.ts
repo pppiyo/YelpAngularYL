@@ -2,6 +2,8 @@ import { Component, OnInit, Input } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { BizDetails } from 'src/app/shared/models/BizDetails';
+import { Output, EventEmitter } from '@angular/core';
+import { Booking } from 'src/app/shared/models/Booking';
 
 @Component({
   selector: 'app-reservation',
@@ -14,6 +16,7 @@ export class ReservationComponent implements OnInit {
   booked: any[] = [];
 
   @Input() bizDetails: BizDetails;
+  @Output() isReserved = new EventEmitter<boolean>();
 
   constructor(private formBuilder: FormBuilder) {
   }
@@ -29,6 +32,11 @@ export class ReservationComponent implements OnInit {
     );
   }
 
+  onSubmittedChange() {
+    alert('submit status changed!');
+    this.isReserved.emit(this.submitted);
+  }
+
   get f(): { [key: string]: AbstractControl } {
     return this.form.controls;
   }
@@ -36,6 +44,7 @@ export class ReservationComponent implements OnInit {
   cancelBooking() {
     this.form.reset();
     this.submitted = false;
+    this.onSubmittedChange();
   }
 
   onSubmit(): void {
@@ -45,7 +54,7 @@ export class ReservationComponent implements OnInit {
       return;
     }
 
-    // console.log(JSON.stringify(this.form.value, null, 2));
+    this.onSubmittedChange();
 
     if (typeof (Storage) !== "undefined") {
 
@@ -55,7 +64,7 @@ export class ReservationComponent implements OnInit {
       let time = this.form.value.hour + this.form.value.minute;
       let email = this.form.value.email;
 
-      let booking: any = {
+      let booking: Booking = {
         'id': id,
         'name': name,
         'date': date,
@@ -63,16 +72,12 @@ export class ReservationComponent implements OnInit {
         'email': email,
       }
 
-      localStorage.setItem('1', JSON.stringify(booking));
-      // localStorage.setItem(id, JSON.stringify(booking));
-      let test = JSON.parse(localStorage.getItem('1') || "[]");
-      console.log(test);
+      localStorage.setItem(id, JSON.stringify(booking));
 
       alert("Reservation created!");
     } else {
       alert("Sorry! No Web Storage support..");
     }
-
 
   }
 

@@ -19,9 +19,6 @@ GlobalConstants
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
-
-  // useAutoDetect: boolean = false;
-
   userInput: FormGroup;
   noResultsVisible: boolean = false;
   resultTableVisible: boolean = false;
@@ -87,22 +84,22 @@ export class SearchComponent implements OnInit {
           this.filteredKeywords = fk;
         }
       });
-
-    // this.autoDetectCtrl.valueChanges
-    //   .subscribe(value => {
-    //     // this.useAutoDetect = value;
-    //     if (value) {
-    //       this.autoDetectCtrl.clearValidators();
-    //       this.autoDetectCtrl.updateValueAndValidity();
-    //     }
-    //   });
   }
 
   onCheckboxChange(e: any) {
-    // const checkArray: FormArray = this.form.get('checkArray') as FormArray;
-    // if (e.target.checked) {
+    if (e.target.checked) {
+      this.locationDisable();
+    } else {
+      this.locationEnable();
+    }
+  }
 
-    // }
+  locationDisable() {
+    this.userInput.get('location')?.disable();
+  }
+
+  locationEnable() {
+    this.userInput.get('location')?.enable();
   }
 
   onSubmit(form: FormGroup) {
@@ -113,7 +110,7 @@ export class SearchComponent implements OnInit {
     form.value.keyword = this.searchKeywordsCtrl.getRawValue().trim();
 
     if (form.controls['auto-detect'].value) { // if checkbox checked
-      alert('using ipinfo');
+      // alert('using ipinfo');
       this.useIpinfo(form);
     }
     else {
@@ -189,6 +186,7 @@ export class SearchComponent implements OnInit {
   clearAll() {
     this.removeHash();
     this.userInput.reset();
+    this.locationEnable();
     this.userInput.patchValue({
       distance: 10,
       category: 'Default',
@@ -204,7 +202,6 @@ export class SearchComponent implements OnInit {
     this.detailsVisible = true;
     this.bizID = data;
   }
-
 
 
   removeHash() {

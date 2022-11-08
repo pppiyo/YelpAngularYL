@@ -1,5 +1,5 @@
 <div class="text-center mb-5">
-  <div style="margin:0 auto; max-width: 1000px;">
+  <div style="margin:0 auto; max-width: 870px;">
     <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4" style="margin:2%;">
       <div class="text-start mt-4 ms-3">
         <mat-icon (click)="backToTable()">keyboard_backspace</mat-icon>
@@ -12,9 +12,16 @@
           <app-details-text [bizDetails]="bizDetails"></app-details-text>
 
           <div class="text-center mb-4">
-            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal">
-              Reserve Now
+
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              *ngIf="!isReserved">
+              Reserve now
             </button>
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              (click)="cancelBooking()" *ngIf="isReserved">
+              Cancel reservation
+            </button>
+
           </div>
 
           <div class="text-center mb-3">Share on:
@@ -57,10 +64,11 @@
       </div>
       <div class="modal-body">
         <h1 class="text-center">{{bizDetails.name}}</h1>
-        <app-reservation [bizDetails]="bizDetails"></app-reservation>
+        <app-reservation (isReserved)=changeReservStat($event) [bizDetails]="bizDetails"></app-reservation>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="cancelBooking()">Close</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <!-- <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="cancelBooking()">Close</button> -->
       </div>
     </div>
   </div>
