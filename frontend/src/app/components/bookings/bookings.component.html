@@ -5,11 +5,18 @@
 <div *ngIf="!noReserve" style="text-align: center; margin: 2%;">
   <p style="font-size:22px; margin: 2rem;">List of your reservations</p>
 
-  <div class="card shadow-2-strong card-registration rounded-2" style="margin:auto; max-width: 800px;">
+  <!--
+  <div class="d-flex">
+    <div class="p-2 flex-fill">Flex it
+    </div>
+    <div class="p-2 flex-fill">Flex item</div>
+    <div class="p-2 flex-fill">Flex item</div>
+  </div> -->
 
-    <div class="row justify-content-center">
+  <div class="card rounded-4 p-2" style="margin:auto; max-width: 800px;">
 
-      <table class="table table-striped rounded-2">
+    <div class="row">
+      <table class="table rounded-2">
         <thead>
           <tr>
             <th scope="col" class="th">#</th>
@@ -21,14 +28,14 @@
         </thead>
         <tbody>
           <tr *ngFor="let booking of bookings; let i=index">
-            <!-- <tr *ngFor="let i=index"> -->
-            <th scope="row">{{ i }}</th>
-            <td>
-              <!-- {{this.bookings['email']}} -->
+            <th scope="row">{{ i + 1 }}</th>
+            <td>{{this.booking.name}}</td>
+            <td>{{this.booking.date}}</td>
+            <td>{{this.booking.time}}</td>
+            <td>{{this.booking.email}}</td>
+            <td sytle="padding: 0px;">
+              <img [src]="'https://www.svgrepo.com/show/21045/delete-button.svg'" style="width: 15px; height: 15px;" />
             </td>
-            <!-- <td>{{ bizResult.name }}</td>
-            <td>{{ bizResult.rating | number }}</td>
-            <td>{{ bizResult.distance | number }}</td> -->
           </tr>
           <!-- <tr *ngFor="let item of searchResult" (click)="showDetails($event, bizResult)" style="height: 100px;">
             <th scope="row">{{ bizResult.order }}</th>

@@ -62,7 +62,7 @@ export class ReservationComponent implements OnInit {
       let id = this.bizDetails.id;
       let name = this.bizDetails.name;
       let date = this.form.value.date;
-      let time = this.form.value.hour + this.form.value.minute;
+      let time = this.form.value.hour + ":" + this.form.value.minute;
       let email = this.form.value.email;
 
       let booking: Booking = {

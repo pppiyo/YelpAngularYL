@@ -3,7 +3,6 @@ import { GlobalConstants } from 'src/app/global/global-constants';
 import { Booking } from 'src/app/shared/models/Booking';
 GlobalConstants
 
-
 @Component({
   selector: 'app-bookings',
   templateUrl: './bookings.component.html',
@@ -11,34 +10,31 @@ GlobalConstants
 })
 export class BookingsComponent implements OnInit {
   noReserve: boolean = false;
-  bookings: Booking[];
+  bookings: Booking[] = [];
 
-  constructor() { }
-  // localStorage.clear();
+  constructor() {
+
+  }
 
   ngOnInit(): void {
-    console.log(localStorage);//
+    console.log(localStorage);
 
     if (localStorage.length > 0) {
       for (let i = 0; i < localStorage.length; i++) {
-        if (localStorage.key(i) !== null) { }
-
+        let key = localStorage.key(i);
+        if (key !== null) {
+          let itemStr = localStorage.getItem(key);
+          if (itemStr !== null) {
+            let bk = JSON.parse(itemStr);
+            this.bookings.push(bk);
+          }
+        }
       }
-
-
-      // let test = JSON.parse(localStorage.getItem(id) || "[]");
-
-
     } else {
       this.noReserve = true;
     }
 
-
   }
-
-
-
-
 
   allStorage() {
 
@@ -55,3 +51,6 @@ export class BookingsComponent implements OnInit {
 
 
 }
+
+
+// localStorage.clear();
