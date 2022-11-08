@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { GlobalConstants } from 'src/app/global/global-constants';
-import { BookingService } from 'src/app/services/booking.service';
 GlobalConstants
 
 
@@ -13,40 +12,28 @@ export class BookingsComponent implements OnInit {
   noReserve: boolean = true;
   bookings: any;
 
-  constructor(private bookingServ: BookingService) { }
+  constructor() { }
 
   ngOnInit(): void {
     localStorage.clear();
 
-    this.bookingServ.booking.subscribe(bookings => this.bookings = bookings
-    );
-    // = localStorage.getItem('1');
-    // console.log(this.bookings.email);
 
 
   }
 
 
-  // allStorage() {
+  allStorage() {
 
-  //   var values = [],
-  //     keys = Object.keys(localStorage),
-  //     i = keys.length;
+    var values = [],
+      keys = Object.keys(localStorage),
+      i = keys.length;
 
-  //   while (i--) {
-  //     values.push(localStorage.getItem(keys[i]));
-  //   }
+    while (i--) {
+      values.push(localStorage.getItem(keys[i]));
+    }
 
-  //   return values;
-  // }
-  // nextBooking() {
-  //   this.bookingServ.nextBooking(this.bookings);
-  // }
-
-  // getBookings() {
-  //   // this.bookings = this.bookingServ.getBookings();
-  // }
-
+    return values;
+  }
 
 
 }

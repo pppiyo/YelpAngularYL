@@ -23,12 +23,10 @@
       </div>
     </div>
 
-    <div class="row" style="align-items: center;">
-      <!-- <div class="row mb-4" style="align-items: center;"> -->
+    <div class="row mb-4" style="align-items: center;">
 
       <label for="hour" class="control-label">Time</label>
-      <div class="col-md-3 w-30">
-        <!-- <div class="col-md-3 d-md-flex"> -->
+      <div class="col-4 col-sm-3">
         <div class="form-group">
           <select class="form-select" id="hour" formControlName="hour"
             [ngClass]="{ 'is-invalid': submitted && f['hour'].errors }" required>
@@ -46,8 +44,7 @@
         </div>
       </div>
       :
-      <div class="col-md-3">
-        <!-- <div class="col-md-3 d-md-flex"> -->
+      <div class="col-4 col-sm-3">
         <div class="form-group">
           <select class="form-select" id="minute" formControlName="minute"
             [ngClass]="{ 'is-invalid': submitted && f['minute'].errors }" required>
@@ -61,7 +58,7 @@
         </div>
       </div>
 
-      <div class="col-md-1" style="padding-left: 0px;">
+      <div class="col col-sm-2" style="padding-left: 0px;">
         <mat-icon>schedule</mat-icon>
       </div>
 

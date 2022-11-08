@@ -1,10 +1,3 @@
 .form-select {
   background-image: none;
 }
-
-@media only screen and (max-width: 400px) {
-  #hour #minute #colon {
-    width: 30%;
-    display: inline-flex;
-  }
-}

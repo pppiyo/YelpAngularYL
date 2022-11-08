@@ -8,7 +8,6 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Review } from 'src/app/shared/models/Review';
 import { ReservationComponent } from '../reservation/reservation.component';
-import { BookingService } from 'src/app/services/booking.service';
 
 @Component({
   selector: 'app-details',
