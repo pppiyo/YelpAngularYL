@@ -57,52 +57,11 @@
       </div>
       <div class="modal-body">
         <h1 class="text-center">{{bizDetails.name}}</h1>
-        <app-reservation></app-reservation>
+        <app-reservation [bizDetails]="bizDetails"></app-reservation>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-dark" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" (click)="cancelBooking()">Close</button>
       </div>
     </div>
   </div>
 </div>
-
-
-<!-- <form action="" class="resInfo">
-          <div class="mb-3">
-            <label for="email" class="control-label">Email</label>
-            <input type="email" class="form-control" id="email" required>
-          </div>
-
-          <div class="mb-3">
-            <label for="date" class="control-label">Date</label>
-            <input type="date" class="form-control" id="date" required>
-          </div>
-
-          <div class="row mb-3">
-            <label for="hour" class="control-label">Time</label>
-            <div class="w-20 col-md-3">
-              <select class=" form-select" id="hour" required>
-                <option>10</option>
-                <option>11</option>
-                <option>12</option>
-                <option>13</option>
-                <option>14</option>
-                <option>15</option>
-                <option>16</option>
-                <option>17</option>
-              </select>
-            </div>
-            :
-            <div class="col-md-3">
-              <select class="form-select" id="minute" required>
-                <option>00</option>
-                <option>15</option>
-                <option>30</option>
-                <option>45</option>
-              </select>
-            </div>
-          </div>
-          <div class="text-center">
-            <button type="button" class="btn btn-danger" id="submit">Submit</button>
-          </div>
-        </form> -->

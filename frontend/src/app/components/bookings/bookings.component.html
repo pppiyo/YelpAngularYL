@@ -1,1 +1,41 @@
-<p>bookings works!</p>
+<p *ngIf="noReserve" id="no-reserv" style="text-align:center; color:red; font-size:18px; margin-top: 3rem;">No
+  reservations to
+  show</p>
+
+<div style="text-align: center; margin: auto;">
+  <div class="card shadow-2-strong" style="padding-top: 0.5%; margin:2%">
+    <div class="row justify-content-center .row.row-eq-height > .col-xs-4">
+      <table class="table rounded-2">
+        <thead>
+          <tr>
+            <th scope="col" class="th">#</th>
+            <th scope="col" class="th">Business Name</th>
+            <th scope="col" class="th">Date</th>
+            <th scope="col" class="th">Time</th>
+            <th scope="col" class="th">Email</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let booking of bookings">
+            <th scope="row">{{ 1 }}</th>
+            <td>
+              <!-- {{this.bookings['email']}} -->
+            </td>
+            <!-- <td>{{ bizResult.name }}</td>
+            <td>{{ bizResult.rating | number }}</td>
+            <td>{{ bizResult.distance | number }}</td> -->
+          </tr>
+          <!-- <tr *ngFor="let item of searchResult" (click)="showDetails($event, bizResult)" style="height: 100px;">
+            <th scope="row">{{ bizResult.order }}</th>
+            <td>
+              <img [src]="bizResult.imgURL" class="me-2" style="width: 80px; height: 80px; object-fit:cover;" />
+            </td>
+            <td>{{ bizResult.name }}</td>
+            <td>{{ bizResult.rating | number }}</td>
+            <td>{{ bizResult.distance | number }}</td>
+          </tr> -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

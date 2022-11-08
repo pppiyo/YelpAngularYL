@@ -19,6 +19,9 @@ GlobalConstants
   styleUrls: ['./search.component.css']
 })
 export class SearchComponent implements OnInit {
+
+  // useAutoDetect: boolean = false;
+
   userInput: FormGroup;
   noResultsVisible: boolean = false;
   resultTableVisible: boolean = false;
@@ -31,7 +34,7 @@ export class SearchComponent implements OnInit {
 
   selectedKeyword: any = "";
   searchKeywordsCtrl = new FormControl();
-  autoDetectCtrl = new FormControl();
+  locationCtrl = new FormControl();
   filteredKeyword: any;
 
   constructor(private fb: FormBuilder, private searchServ: SearchService, private http: HttpClient) { }
@@ -45,7 +48,6 @@ export class SearchComponent implements OnInit {
       keyword: ['', Validators.required],
       distance: ['10', Validators.required],
       category: [`${this.categories[0]}`, Validators.required],
-      // location: [''],
       location: ['', Validators.required],
       'auto-detect': false
     });
@@ -88,13 +90,19 @@ export class SearchComponent implements OnInit {
 
     // this.autoDetectCtrl.valueChanges
     //   .subscribe(value => {
-    //     alert(value);
+    //     // this.useAutoDetect = value;
     //     if (value) {
-    //       this.userInput.controls['location'].setValidators(Validators.required);
-    //     } else {
-    //       this.userInput.controls['location'].setValidators(Validators.nullValidator);
+    //       this.autoDetectCtrl.clearValidators();
+    //       this.autoDetectCtrl.updateValueAndValidity();
     //     }
     //   });
+  }
+
+  onCheckboxChange(e: any) {
+    // const checkArray: FormArray = this.form.get('checkArray') as FormArray;
+    // if (e.target.checked) {
+
+    // }
   }
 
   onSubmit(form: FormGroup) {

@@ -103,7 +103,6 @@ app.get('/reviews', function (req, res) {
         headers: { 'Authorization': `Bearer ${apiKey}` },
         // params: { 'text': 'Ramen' }
     }).then(function (response) {
-        console.log(response.data)
         res.status(200).send(response.data);
     });
 })

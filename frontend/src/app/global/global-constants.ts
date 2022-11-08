@@ -4,6 +4,6 @@ export class GlobalConstants {
   public static YELP_ICON_URL = 'https://logos-world.net/wp-content/uploads/2020/12/Yelp-Logo.png';
   public static BIZ_ITEM_NUM = 10;
   public static REVIEW_ITEM_NUM = 3;
-  public static MIN_LENGTH_TERM = 1;
-  // public static MIN_LENGTH_TERM = 3;
+  public static MIN_LENGTH_TERM = 3;
+
 }

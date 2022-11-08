@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angular/core';
 import { GlobalConstants } from 'src/app/global/global-constants';
 import { DetailsService } from 'src/app/services/details.service';
 import { BizDetails } from 'src/app/shared/models/BizDetails';
@@ -7,6 +7,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Review } from 'src/app/shared/models/Review';
+import { ReservationComponent } from '../reservation/reservation.component';
+import { BookingService } from 'src/app/services/booking.service';
 
 @Component({
   selector: 'app-details',
@@ -15,10 +17,15 @@ import { Review } from 'src/app/shared/models/Review';
 })
 export class DetailsComponent implements OnInit {
 
+  @ViewChild(ReservationComponent, { static: true }) child: ReservationComponent;
+
+  cancelBooking() {
+    this.child.cancelBooking();
+  }
+
   @Input() bizID = '';
 
   public bizDetails: BizDetails;
-  // public review: Review;
 
   mapOptions: google.maps.MapOptions = {
     center: { lat: 38.9987208, lng: -77.2538699 },
@@ -29,11 +36,15 @@ export class DetailsComponent implements OnInit {
   }
 
   constructor(private httpClient: HttpClient) { }
+  // constructor(private httpClient: HttpClient, private bookingServ: BookingService) { }
 
   ngOnInit(): void {
-    console.log(this.bizID);
+    // console.log(this.bizID);
 
     this.getBizDetails(this.bizID);
+
+    // this.bookingServ.sharedMessage.subscribe(message => this.message = message)
+
 
   }
 
@@ -127,6 +138,8 @@ export class DetailsComponent implements OnInit {
   backToTable() {
     // resultTableVisible = true;
   }
+
+
 
 }
 
