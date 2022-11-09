@@ -9,8 +9,8 @@ import { ReservationComponent } from './components/reservation/reservation.compo
 
 const routes: Routes = [
   { path: '', redirectTo: 'search', pathMatch: 'full' },
-  { path: 'search', component: SearchComponent},
-  { path: 'bookings', component: BookingsComponent},
+  { path: 'search', component: SearchComponent },
+  { path: 'bookings', component: BookingsComponent },
 ];
 
 @NgModule({

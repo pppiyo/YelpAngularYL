@@ -1,1 +1,78 @@
-<p>details works!</p>
+<div class="text-center mb-5">
+  <div style="margin:0 auto; max-width: 870px;">
+    <div id="detailsCard" class="card shadow-2-strong card-registration rounded-4" style="margin:2%;">
+      <div id="goBack" class="text-start mt-4 ms-3">
+        <mat-icon (click)="backToTable()">keyboard_backspace</mat-icon>
+      </div>
+
+      <h1 class="text-center mt-3" style="font-weight:bold; font-size: 24px;">{{bizDetails.name}}</h1>
+
+      <mat-tab-group mat-align-tabs="center" backgroundColor="accent">
+        <mat-tab label="Business details">
+          <app-details-text [bizDetails]="bizDetails"></app-details-text>
+
+          <div class="text-center mb-4">
+
+            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#exampleModal"
+              *ngIf="!isReserved">
+              Reserve now
+            </button>
+            <button type="button" class="btn btn-primary" (click)="cancelBooking()" *ngIf="isReserved">
+              Cancel reservation
+            </button>
+          </div>
+
+          <div class="text-center mb-3">Share on:
+            <a href="{{'https://twitter.com/intent/tweet?text=Check%20' + bizDetails.name + '%20on%20yelp.%0A' + bizDetails.yelpLink}}"
+              target="_blank">
+              <img src="https://upload.wikimedia.org/wikipedia/sco/9/9f/Twitter_bird_logo_2012.svg" class="smIcon">
+            </a>
+
+            <a href="{{'https://www.facebook.com/sharer/sharer.php?quote=Check%20' + bizDetails.name + '%20on%20yelp.%0A&u=' + bizDetails.yelpLink}}"
+              target="_blank"><img src="https://upload.wikimedia.org/wikipedia/commons/1/1b/Facebook_icon.svg"
+                class="smIcon"></a>
+
+          </div>
+          <app-carousel [photos]="bizDetails.photosURL"></app-carousel>
+        </mat-tab>
+
+        <mat-tab label="Map location">
+          <div class="biz-google-map">
+            <div class="mb-4 mt-4">
+              <google-map [width]="'auto'" [height]="'600px'" [options]="mapOptions">
+                <map-marker [position]="marker.position"></map-marker>
+              </google-map>
+
+            </div>
+          </div>
+        </mat-tab>
+
+        <mat-tab label="Reviews">
+          <app-reviews [bizDetails]="bizDetails"></app-reviews>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+  </div>
+</div>
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" #closebutton class="btn-close" data-bs-dismiss="modal" aria-label="Close" hidden>
+        </button>
+        <h1 class="modal-title mb-0" id="exampleModalLabel">Reservation form</h1>
+      </div>
+      <div class="modal-body">
+        <h1 class="text-center">{{bizDetails.name}}</h1>
+        <app-reservation (isReserved)="changeReservStat($event)" [bizDetails]="bizDetails">
+        </app-reservation>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-dark" data-bs-dismiss="modal" id="modalCloseButton">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

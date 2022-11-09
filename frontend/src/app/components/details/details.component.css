@@ -1,0 +1,15 @@
+h1 {
+  font-weight: bold;
+}
+
+.smIcon {
+  height: 30px;
+  width: 30px;
+  object-fit: contain;
+  margin-left: 8px;
+}
+
+
+#goBack :hover {
+  cursor: pointer;
+}

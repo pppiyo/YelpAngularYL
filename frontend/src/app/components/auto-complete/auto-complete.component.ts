@@ -3,8 +3,8 @@ import { FormControl } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 
 import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
-
-const API_KEY = "";
+import { GlobalConstants } from 'src/app/global/global-constants';
+GlobalConstants
 
 @Component({
   selector: 'app-auto-complete',
@@ -24,12 +24,12 @@ export class AutoCompleteComponent implements OnInit {
   ) { }
 
   onSelected() {
-    console.log(this.selectedKeyword);
+    // console.log(this.selectedKeyword);
     this.selectedKeyword = this.selectedKeyword;
   }
 
   displayWith(value: any) {
-    return value?.Title;
+    return value?.Term;
   }
 
   clearSelection() {
@@ -50,7 +50,7 @@ export class AutoCompleteComponent implements OnInit {
           this.filteredKeywords = [];
           this.isLoading = true;
         }),
-        switchMap(value => this.http.get('http://127.0.0.1/autoComplete?' + value)
+        switchMap(value => this.http.get(GlobalConstants.API_URL + '/autoComplete?' + value)
           .pipe(
             finalize(() => {
               this.isLoading = false
@@ -59,14 +59,14 @@ export class AutoCompleteComponent implements OnInit {
         )
       )
       .subscribe((data: any) => {
-        if (data['Search'] == undefined) {
+        if (data['terms'] == undefined) {
           this.errorMsg = data['Error'];
           this.filteredKeywords = [];
         } else {
           this.errorMsg = "";
-          this.filteredKeywords = data['Search'];
+          this.filteredKeywords = data['terms'];
         }
-        console.log(this.filteredKeywords);
+        // console.log(this.filteredKeywords);
       });
   }
 }

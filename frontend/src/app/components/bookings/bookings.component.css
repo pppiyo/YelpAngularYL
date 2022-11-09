@@ -1,0 +1,12 @@
+th {
+  font-weight: bold;
+}
+
+#deleteIcon :hover {
+  cursor: pointer;
+}
+
+
+.scrollme {
+  overflow-x: auto;
+}

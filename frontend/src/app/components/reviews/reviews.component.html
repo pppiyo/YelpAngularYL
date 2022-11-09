@@ -1,0 +1,11 @@
+<table class="table table-striped mb-0">
+  <thead>
+  </thead>
+  <tbody>
+    <tr class="text-start" *ngFor=" let review of reviews">
+      <td><b>{{review.username}}</b> <br /> {{ review.rating }}<br /><br> {{ review.text }}<br /> <br>{{ review.date
+        }}<br><br>
+      </td>
+    </tr>
+  </tbody>
+</table>

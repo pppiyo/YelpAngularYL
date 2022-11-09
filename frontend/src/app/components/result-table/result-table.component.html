@@ -1,23 +1,32 @@
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">#</th>
-      <th scope="col">Image</th>
-      <th scope="col">Business Name</th>
-      <th scope="col">Rating</th>
-      <th scope="col">Distance (miles)</th>
-    </tr>
-  </thead>
+<div style="text-align: center; margin:2%;">
+  <div class="card shadow-2-strong card-registration rounded-4"
+    style="padding-top: 0.5%; margin:auto; max-width: 1180px;">
+    <div class="row justify-content-center .row.row-eq-height > .col-xs-4">
+      <div class="col-md-12">
+        <table class="table table-striped rounded-4">
+          <thead>
+            <tr style="font-weight: bold; font-size: 15px;">
+              <th scope="col" class="th">#</th>
+              <th scope="col-md-6" class="th">Image</th>
+              <th scope="col-md-2" class="th">Business Name</th>
+              <th scope="col-md-1" class="th">Rating</th>
+              <th scope="col" class="th">Distance (miles)</th>
+            </tr>
+          </thead>
 
-  <tbody>
-    <tr *ngFor="let bizResult of searchResult">
-      <th scope="row">{{ bizResult.order }}</th>
-      <td>
-        <img [src]="bizResult.imgURL" class="me-2" style="width: 20px" />
-      </td>
-      <td>{{ bizResult.name }}</td>
-      <td>{{ bizResult.rating | number }}</td>
-      <td>{{ bizResult.distance | number }}</td>
-    </tr>
-  </tbody>
-</table>
+          <tbody>
+            <tr *ngFor="let bizResult of searchResult" (click)="showDetails($event, bizResult)" style="height: 100px;">
+              <th scope="row" style="font-weight: bold;">{{ bizResult.order }}</th>
+              <td>
+                <img [src]="bizResult.imgURL" class="me-2" style="width: 80px; height: 80px; object-fit:cover;" />
+              </td>
+              <td>{{ bizResult.name }}</td>
+              <td>{{ bizResult.rating | number }}</td>
+              <td>{{ bizResult.distance | number }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

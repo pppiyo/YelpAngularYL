@@ -4,11 +4,14 @@ import { FormGroup, FormControl, Validators, FormBuilder, CheckboxControlValueAc
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';//
 import { SearchService } from 'src/app/services/search.service';
-import { KeywordsService } from 'src/app/services/keywords.service';
 import { max } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map, startWith } from 'rxjs/operators';
+import { debounceTime, tap, switchMap, finalize, distinctUntilChanged, filter } from 'rxjs/operators';
+import { Input } from '@angular/core';
+import { GlobalConstants } from 'src/app/global/global-constants';
+GlobalConstants
 
-const BIZ_ITEM_NUM = 10;
-const MILES_TO_METERS = 1609.344;
 
 @Component({
   selector: 'app-search',
@@ -17,9 +20,21 @@ const MILES_TO_METERS = 1609.344;
 })
 export class SearchComponent implements OnInit {
   userInput: FormGroup;
-  private httpClient: HttpClient;
+  noResultsVisible: boolean = false;
+  resultTableVisible: boolean = false;
+  detailsVisible: boolean = false;
+  bizID: string;
 
-  constructor(private fb: FormBuilder, private searchServ: SearchService, private keyServ: KeywordsService) { }
+  filteredKeywords: string[];
+  isLoading = false;
+  errorMsg!: string;
+
+  selectedKeyword: any = "";
+  searchKeywordsCtrl = new FormControl();
+  locationCtrl = new FormControl();
+  filteredKeyword: any;
+
+  constructor(private fb: FormBuilder, private searchServ: SearchService, private http: HttpClient) { }
 
   categories = ['Default', 'Arts & Entertainment',
     'Health & Medical', 'Hotels & Travel',
@@ -33,11 +48,70 @@ export class SearchComponent implements OnInit {
       location: ['', Validators.required],
       'auto-detect': false
     });
+
+    this.searchKeywordsCtrl.valueChanges
+      .pipe(
+        filter(res => {
+          return res !== null && res.length >= GlobalConstants.MIN_LENGTH_TERM
+        }),
+        distinctUntilChanged(),
+        debounceTime(1000),
+        tap(() => {
+          this.errorMsg = "";
+          this.filteredKeywords = [];
+          this.isLoading = true;
+        }),
+        switchMap(value => this.http.get(GlobalConstants.API_URL + '/autoComplete?text=' + value)
+          .pipe(
+            finalize(() => {
+              this.isLoading = false;
+            }),
+          )
+        )
+      )
+      .subscribe((data: any) => {
+        if (data['terms'] == undefined || data['categories'] == undefined) {
+          this.errorMsg = "Something went wrong"; // DEBUG
+        } else {
+          this.errorMsg = "";
+          let fk: any[] = [];
+          data['terms'].forEach(function (value: any) {
+            fk.push(value['text']);
+          });
+          data['categories'].forEach(function (value: any) {
+            fk.push(value['title']);
+          });
+          this.filteredKeywords = fk;
+        }
+      });
+  }
+
+  onCheckboxChange(e: any) {
+    if (e.target.checked) {
+      this.locationDisable();
+    } else {
+      this.locationEnable();
+    }
+  }
+
+  locationDisable() {
+    this.userInput.get('location')?.reset();
+    this.userInput.get('location')?.disable();
+  }
+
+  locationEnable() {
+    this.userInput.get('location')?.enable();
   }
 
   onSubmit(form: FormGroup) {
-    // console.log(form.value); // DEBUG
+    this.detailsVisible = false;
+    this.noResultsVisible = false;
+    this.resultTableVisible = false;
+
+    form.value.keyword = this.searchKeywordsCtrl.getRawValue().trim();
+
     if (form.controls['auto-detect'].value) { // if checkbox checked
+      // alert('using ipinfo');
       this.useIpinfo(form);
     }
     else {
@@ -47,11 +121,14 @@ export class SearchComponent implements OnInit {
       params.set('categories', form.value.category);
       params.set('location', form.value.location);
 
-      console.log(params.toString()); // DEBUG
-
       let query: string = params.toString();
       this.sendForm(query);
     }
+
+  }
+
+  onSelect(event: any) {
+    this.selectedKeyword = event.target.textContent.trim();
   }
 
   get form() { return this.userInput.controls; }
@@ -73,45 +150,67 @@ export class SearchComponent implements OnInit {
         params.set('latitude', lat);
         params.set('longitude', lng);
 
-        console.log(params.toString()); // DEBUG
-
         let query: string = params.toString();
         this.sendForm(query);
       })
   }
 
   sendForm(query: any) {
-    fetch("http://127.0.0.1:3000/cook?" + query).then(
+    fetch(GlobalConstants.API_URL + '/cook?' + query).then(
       (response) => response.json()
     ).then(
       (jsonResponse) => {
-        // console.log(jsonResponse['businesses'][0]); // DEBUG
         if (!jsonResponse['businesses'] || jsonResponse['businesses'].length == 0) {
-          // 'No results available'
+          this.noResultsVisible = true;
         }
         else {
           // update result table from here.
-          alert(jsonResponse['businesses'].length);
-          for (let i = 0; i < Math.min(BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
+          for (let i = 0; i < Math.min(GlobalConstants.BIZ_ITEM_NUM, jsonResponse['businesses'].length); i++) {
+            if (jsonResponse['businesses'][i]['image_url'] == '') {
+              jsonResponse['businesses'][i]['image_url'] = GlobalConstants.YELP_ICON_URL;
+            }
             this.searchServ.results[i] = {
               'order': i + 1,
               'id': jsonResponse['businesses'][i]['id'],
               'imgURL': jsonResponse['businesses'][i]['image_url'],
               'name': jsonResponse['businesses'][i]['name'],
               'rating': jsonResponse['businesses'][i]['rating'],
-              'distance': Math.round(jsonResponse['businesses'][i]['distance'] / MILES_TO_METERS),
+              'distance': Math.round(jsonResponse['businesses'][i]['distance'] / GlobalConstants.MILES_TO_METERS),
             };
           }
-
-          // console.log(this.searchServ.results); // DEBUG
+          this.resultTableVisible = true;
         }
       }
     )
   }
 
-
   clearAll() {
-    // this.userInput.reset();
-    //todo: more to come
+    this.removeHash();
+    this.userInput.reset();
+    this.locationEnable();
+    this.userInput.patchValue({
+      distance: 10,
+      category: 'Default',
+    });
+    this.resultTableVisible = false;
+    this.detailsVisible = false;
+    this.noResultsVisible = false;
+  }
+
+  showDetailsPMethod(data: any) {
+    this.noResultsVisible = false;
+    this.resultTableVisible = false;
+    this.detailsVisible = true;
+    this.bizID = data;
+  }
+
+  showResultTable(eventData: boolean) {
+    this.resultTableVisible = eventData;
+    this.detailsVisible = !this.resultTableVisible;
+  }
+
+
+  removeHash() {
+    history.replaceState('', document.title, window.location.origin + window.location.pathname + window.location.search);
   }
 }

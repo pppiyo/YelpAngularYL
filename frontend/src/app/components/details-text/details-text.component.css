@@ -1,0 +1,9 @@
+.subheading {
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.textArea .column {
+  flex: auto;
+}

@@ -1,1 +1,71 @@
-<p>reservation works!</p>
+<div class="register-form">
+  <form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="mb-2">
+      <div class="form-group">
+        <label for="email" class="control-label">Email</label>
+        <input type="text" class="form-control" formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" id="email" required>
+        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+          <div *ngIf="f['email'].errors['required']">Email is required</div>
+          <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <div class="form-group">
+        <label for="date" class="control-label">Date</label>
+        <input type="date" class="form-control" formControlName="date"
+          [ngClass]="{ 'is-invalid': submitted && f['date'].errors }" id="date" required>
+        <div *ngIf="submitted && f['date'].errors" class="invalid-feedback">
+          <div *ngIf="f['date'].errors['required']">Date is required</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4" style="align-items: center;">
+
+      <label for="hour" class="control-label">Time</label>
+      <div class="col-4 col-sm-3">
+        <div class="form-group">
+          <select class="form-select" id="hour" formControlName="hour"
+            [ngClass]="{ 'is-invalid': submitted && f['hour'].errors }" required>
+            <option>10</option>
+            <option>11</option>
+            <option>12</option>
+            <option>13</option>
+            <option>14</option>
+            <option>15</option>
+            <option>16</option>
+            <option>17</option>
+          </select>
+          <div *ngIf="submitted && f['hour'].errors" class="invalid-feedback">
+          </div>
+        </div>
+      </div>
+      :
+      <div class="col-4 col-sm-3">
+        <div class="form-group">
+          <select class="form-select" id="minute" formControlName="minute"
+            [ngClass]="{ 'is-invalid': submitted && f['minute'].errors }" required>
+            <option>00</option>
+            <option>15</option>
+            <option>30</option>
+            <option>45</option>
+          </select>
+          <div *ngIf="submitted && f['minute'].errors" class="invalid-feedback">
+          </div>
+        </div>
+      </div>
+
+      <div class="col col-sm-2" style="padding-left: 0px;">
+        <mat-icon>schedule</mat-icon>
+      </div>
+
+    </div>
+
+    <div class="text-center">
+      <button type="submit" class="btn btn-danger" id="submit">Submit</button>
+    </div>
+  </form>
+</div>
