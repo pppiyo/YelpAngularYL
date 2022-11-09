@@ -4,7 +4,8 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
+// const PORT = 3000;
 
 const app = express();
 
@@ -101,7 +102,6 @@ app.get('/reviews', function (req, res) {
         method: 'get',
         url: 'https://api.yelp.com/v3/businesses/' + id + '/reviews',
         headers: { 'Authorization': `Bearer ${apiKey}` },
-        // params: { 'text': 'Ramen' }
     }).then(function (response) {
         res.status(200).send(response.data);
     });
