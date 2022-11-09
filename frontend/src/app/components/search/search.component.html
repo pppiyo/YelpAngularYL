@@ -2,7 +2,7 @@
 <div style="max-width: 780px; margin: auto;">
   <div class="card shadow-2-strong card-registration rounded-4" style="margin:4% 2% 8% 2%">
     <div class="card-body p-3 p-md-5" style="padding: 3% 3% 2% 3%;">
-      <h1 class="card-title text-center" style="margin-bottom: 2rem;">Business search</h1>
+      <h1 class="card-title text-center" style="margin-bottom: 2rem; font-weight:bold;">Business search</h1>
 
       <form [formGroup]="userInput" #searchForm="ngForm" (ngSubmit)="onSubmit(userInput)" ngNativeValidate>
 
@@ -51,15 +51,13 @@
           </div>
         </div>
 
-        <div class="row offset-md-0 mb-3">
-          <div class="form-check">
+        <div class="row mb-3">
+          <div class="form-check" style="padding-left: 2rem;">
             <label class="form-check-label" for="auto-detect">
               Auto-detect my location
             </label>
             <input class="form-check-input" type="checkbox" id="auto-detect" formControlName="auto-detect"
               (change)="onCheckboxChange($event)">
-            <!-- <input class="form-check-input" type="checkbox" id="auto-detect" formControlName="auto-detect"
-              [formControl]="autoDetectCtrl"> -->
           </div>
         </div>
 

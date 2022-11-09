@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
     </p>
   `,
   styles: [
-    'p { color:red; font-weight: bold; text-align: center; border: 1px solid white; border-radius: 10px; padding: 0% 10% 0% 10%; background-color: white; max-width: 350px; margin:0 auto;}'
+    'p { color:red; font-size: 22px; text-align: center; border: 1px solid white; border-radius: 11px; padding: 0% 5% 0% 5%; background-color: white; max-width: 450px; margin:0 auto;}'
   ]
 })
 export class NoResultsComponent implements OnInit {
