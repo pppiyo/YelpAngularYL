@@ -5,20 +5,12 @@
 <div *ngIf="!noReserve" style="text-align: center; margin: 2%;">
   <p style="font-size:22px; margin: 2rem;">List of your reservations</p>
 
-  <!--
-  <div class="d-flex">
-    <div class="p-2 flex-fill">Flex it
-    </div>
-    <div class="p-2 flex-fill">Flex item</div>
-    <div class="p-2 flex-fill">Flex item</div>
-  </div> -->
+  <div class="card rounded-4 p-3" style="margin:auto; max-width: 800px;">
 
-  <div class="card rounded-4 p-2" style="margin:auto; max-width: 800px;">
-
-    <div class="row">
-      <table class="table rounded-2">
+    <div class="scrollme">
+      <table class="table table-hover table-responsive rounded-2">
         <thead>
-          <tr>
+          <tr class="border-bottom">
             <th scope="col" class="th">#</th>
             <th scope="col" class="th">Business Name</th>
             <th scope="col" class="th">Date</th>
@@ -27,25 +19,17 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let booking of bookings; let i=index">
+          <tr *ngFor="let booking of bookings; let i=index" class="border-bottom">
             <th scope="row">{{ i + 1 }}</th>
             <td>{{this.booking.name}}</td>
             <td>{{this.booking.date}}</td>
             <td>{{this.booking.time}}</td>
             <td>{{this.booking.email}}</td>
-            <td sytle="padding: 0px;">
-              <img [src]="'https://www.svgrepo.com/show/21045/delete-button.svg'" style="width: 15px; height: 15px;" />
+            <td id="deleteIcon">
+              <img [src]="'https://www.svgrepo.com/show/21045/delete-button.svg'" style="width: 15px; height: 15px;"
+                (click)="deleteItem(this.booking.id)" />
             </td>
           </tr>
-          <!-- <tr *ngFor="let item of searchResult" (click)="showDetails($event, bizResult)" style="height: 100px;">
-            <th scope="row">{{ bizResult.order }}</th>
-            <td>
-              <img [src]="bizResult.imgURL" class="me-2" style="width: 80px; height: 80px; object-fit:cover;" />
-            </td>
-            <td>{{ bizResult.name }}</td>
-            <td>{{ bizResult.rating | number }}</td>
-            <td>{{ bizResult.distance | number }}</td>
-          </tr> -->
         </tbody>
       </table>
     </div>

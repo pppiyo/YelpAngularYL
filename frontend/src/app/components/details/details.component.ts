@@ -9,7 +9,6 @@ import { map } from 'rxjs/operators'
 import { Review } from 'src/app/shared/models/Review';
 import { ReservationComponent } from '../reservation/reservation.component';
 
-declare var $: any;
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
@@ -32,6 +31,7 @@ export class DetailsComponent implements OnInit {
 
   cancelBooking() {
     this.child.cancelBooking();
+    localStorage.removeItem(this.bizDetails.id);
   }
 
   updateColor(status: boolean): string {
@@ -47,20 +47,17 @@ export class DetailsComponent implements OnInit {
     this.closebutton.nativeElement.click();
   }
 
-
-
-  // mapOptions: google.maps.MapOptions = {
-  //   center: { lat: 38.9987208, lng: -77.2538699 },
-  //   zoom: 14
-  // }
-  // marker = {
-  //   position: { lat: 38.9987208, lng: -77.2538699 },
-  // }
-
   constructor(private httpClient: HttpClient) { }
 
   ngOnInit(): void {
     this.getBizDetails(this.bizID);
+
+    for (let i = 0; i < localStorage.length; i++) {
+      if (localStorage.key(i) == this.bizID) {
+        this.isReserved = true;
+      };
+    }
+
   }
 
   getBizDetails(id: string) {

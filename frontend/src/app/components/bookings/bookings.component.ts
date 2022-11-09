@@ -13,12 +13,14 @@ export class BookingsComponent implements OnInit {
   bookings: Booking[] = [];
 
   constructor() {
-
   }
 
   ngOnInit(): void {
-    console.log(localStorage);
+    this.update();
+  }
 
+  update() {
+    this.bookings = [];
     if (localStorage.length > 0) {
       for (let i = 0; i < localStorage.length; i++) {
         let key = localStorage.key(i);
@@ -33,24 +35,13 @@ export class BookingsComponent implements OnInit {
     } else {
       this.noReserve = true;
     }
-
   }
 
-  allStorage() {
 
-    var values = [],
-      keys = Object.keys(localStorage),
-      i = keys.length;
-
-    while (i--) {
-      values.push(localStorage.getItem(keys[i]));
-    }
-
-    return values;
+  deleteItem(id: string) {
+    localStorage.removeItem(id);
+    alert("Reservation cancelled!");
+    this.update();
   }
-
 
 }
-
-
-// localStorage.clear();
